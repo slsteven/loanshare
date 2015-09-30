@@ -28,17 +28,29 @@
 				<h1>HERO IMAGE</h1>
 			</div>
     		<div class="col-md-6">
-    			<form class="" role="form" action="/users/login">
-    				<label for="login_email">E-mail</label>
-    				<input type="text" name='login_email' id='login_email' class="form-control" placeholder="Enter your Email">
-    				
-    				<input type="submit" value="Post It!" class="btn btn-success">
+    			<form class="" role="form" action="/users/login" method='post'>
+    				<label for="log_email">E-mail: </label>
+    				<input type="text" name='log_email' id='log_email' class="form-control" placeholder="Enter your Email">
+    				<label for="log_pw">Password: </label>
+    				<input type="text" name='log_pw' id='log_pw' class="form-control" placeholder="Enter your Password">
+    				<input type="password" value="Post It!" class="btn btn-success">
     			</form>  
     		</div>
     		<div class="col-md-6">
-    			<form class="" role="form" action="/sers/register">
-    				Add a note: <input type="text" name='title' id='new_post' class="form-control" placeholder="Enter your title">
-    				<input type="submit" value="Post It!" class="btn btn-success">
+    			<form class="" role="form" action="/users/register" method='post'>
+    				<label for="reg_first">First Name: </label>
+    				<input type="text" name='reg_first' id='reg_first' class="form-control" placeholder="">
+    				<label for="reg_last">Last Name: </label>
+    				<input type="text" name='reg_last' id='reg_last' class="form-control" placeholder="">
+    				<label for="reg_email">E-mail: </label>
+    				<input type="text" name='reg_email' id='reg_email' class="form-control" placeholder="">
+    				<label for="reg_phone">Phone: </label>
+    				<input type="password" name='reg_phone' id='reg_phone' class="form-control" placeholder="">
+    				<label for="reg_pw">Password: </label>
+    				<input type="password" name='reg_pw' id='reg_pw' class="form-control" placeholder="">
+    				<label for="reg_pw_confirm">Confirm Password: </label>
+    				<input type="password" name='reg_pw_confirm' id='reg_pw_confirm' class="form-control" placeholder="">
+    				<input type="submit" value="Register Now" class="btn btn-success">
     			</form>  
     		</div>
     	
