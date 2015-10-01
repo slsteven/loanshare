@@ -1,30 +1,10 @@
-"""
-    Sample Controller File
-
-    A Controller should be in charge of responding to a request.
-    Load models to interact with the database and load views to render them to the client.
-
-    Create a controller using this template
-"""
 from system.core.controller import *
 
 class Loans(Controller):
     def __init__(self, action):
         super(Loans, self).__init__(action)
         self.load_model('Loan')
-        """
-            This is an example of loading a model.
-            Every controller has access to the load_model method.
-
-            self.load_model('WelcomeModel')
-        """
-
-    """ This is an example of a controller method that will load a view for the client """
     def index(self):
-        """ 
-        A loaded model is accessible through the models attribute 
-        self.models['WelcomeModel'].get_all_users()
-        """
         return self.load_view('index.html')
 
     def new_user(self):
@@ -63,6 +43,13 @@ class Loans(Controller):
             return redirect('/')
 
     def show_dashboard(self):
+        if not 'id' in session:
+            flash("You must be logged in to view this page")
+            return redirect('/')
+
+        user_info = self.models['Loan'].get_user_info(session['id'])
+        # if user_info[0].account_type == "2":
+        #     self.models['Loan'].get_borrower_loans(session['id'])
         return self.load_view("dashboard.html")
 
     def logout(self):
@@ -71,6 +58,8 @@ class Loans(Controller):
         return redirect('/')
 
 
+    def show_loan(self,id):
+        return self.load_view("show.html")
 
 
 
