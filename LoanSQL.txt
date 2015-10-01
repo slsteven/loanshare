@@ -120,13 +120,13 @@ USE `hackathon` ;
 -- Table `hackathon`.`loans`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hackathon`.`loans` (
-  `id` INT(11) NOT NULL COMMENT '',
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
   `title` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
   `amount` DECIMAL(10,2) NULL DEFAULT NULL COMMENT '',
-  `intrest` FLOAT NULL DEFAULT NULL COMMENT '',
+  `interest` FLOAT NULL DEFAULT NULL COMMENT '',
   `term` INT NULL DEFAULT NULL COMMENT '',
   `start` DATETIME NULL DEFAULT NULL COMMENT '',
-  `status` INT(11) NULL DEFAULT NULL COMMENT '',
+  `status` VARCHAR(15) NULL DEFAULT NULL COMMENT '',
   `created_at` DATETIME NULL DEFAULT NULL COMMENT '',
   `updated_at` DATETIME NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '')
@@ -138,13 +138,13 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `hackathon`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hackathon`.`users` (
-  `id` INT NOT NULL COMMENT '',
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `first` VARCHAR(55) NOT NULL COMMENT '',
   `last` VARCHAR(55) NULL DEFAULT NULL COMMENT '',
   `email` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
   `password` VARCHAR(255) NOT NULL COMMENT '',
-  `phone` INT(12) NULL DEFAULT NULL COMMENT '',
-  `account_type` INT(11) NULL DEFAULT NULL COMMENT '',
+  `phone` VARCHAR(15) NULL DEFAULT NULL COMMENT '',
+  `account_type` VARCHAR(15) NULL DEFAULT NULL COMMENT '',
   `created_at` DATETIME NULL COMMENT '',
   `updated_at` DATETIME NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '')
@@ -157,18 +157,19 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `hackathon`.`user_loans` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
-  `loan_ID` INT NOT NULL COMMENT '',
-  `user_ID` INT NOT NULL COMMENT '',
+  `loan_id` INT NOT NULL COMMENT '',
+  `lender_id` INT NOT NULL COMMENT '',
+  `borrower_id` INT NULL COMMENT '',
   PRIMARY KEY (`id`)  COMMENT '',
-  INDEX `fk_user_loans_loans_idx` (`loan_ID` ASC)  COMMENT '',
-  INDEX `fk_user_loans_users1_idx` (`user_ID` ASC)  COMMENT '',
+  INDEX `fk_user_loans_loans_idx` (`loan_id` ASC)  COMMENT '',
+  INDEX `fk_user_loans_users1_idx` (`lender_id` ASC)  COMMENT '',
   CONSTRAINT `fk_user_loans_loans`
-    FOREIGN KEY (`loan_ID`)
+    FOREIGN KEY (`loan_id`)
     REFERENCES `hackathon`.`loans` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_loans_users1`
-    FOREIGN KEY (`user_ID`)
+    FOREIGN KEY (`lender_id`)
     REFERENCES `hackathon`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
