@@ -53,7 +53,22 @@ class Loans(Controller):
             'log_pw':request.form['log_pw']
         }
 
+        validate = self.models['Loan'].validate_login(user_info)
+        print validate 
+        if validate['status']:
+            session['id'] = validate['user'][0]['id']
+            return redirect('/users/dashboard')
+        else:
+            flash('Login information was incorrect. Please try again')
+            return redirect('/')
 
+    def show_dashboard(self):
+        return self.load_view("dashboard.html")
+
+    def logout(self):
+        session.clear()
+        flash("You have successfully logged out")
+        return redirect('/')
 
 
 

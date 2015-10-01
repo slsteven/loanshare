@@ -18,6 +18,10 @@ from system.core.router import routes
 """
 routes['default_controller'] = 'Loans'
 routes['POST']['/users/register'] = 'Loans#new_user'
+routes['POST']['/users/login'] = 'Loans#login'
+routes['POST']['/users/loan_form'] = 'Loans#create_loan'
+routes['GET']['/users/dashboard'] = 'Loans#show_dashboard'
+routes['GET']['/users/logout'] = 'Loans#logout'
 """
     You can add routes and specify their handlers as follows:
 

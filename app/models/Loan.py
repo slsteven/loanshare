@@ -50,12 +50,12 @@ class Loan(Model):
 
     def validate_login(self,user):
         #query DB for matching email
-        user_query = "SELECT * FROM users WHERE email = '{}' LIMIT 1".format(user['email'])
+        user_query = "SELECT * FROM users WHERE email = '{}' LIMIT 1".format(user['log_email'])
         validate = self.db.query_db(user_query)
         #Check for email/pw match using bcrypt check_pw method
         if validate == []:
             return {'status': False}
-        elif self.bcrypt.check_password_hash(validate[0]['password'],user['password']):
+        elif self.bcrypt.check_password_hash(validate[0]['password'],user['log_pw']):
             return {'status': True, 'user': validate}
         else:
             return {'status': False}
