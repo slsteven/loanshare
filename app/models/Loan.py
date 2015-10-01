@@ -9,6 +9,10 @@
 """
 from system.core.model import Model
 import re
+from system.core.controller import *
+from twilio.rest import TwilioRestClient
+auth_token  = "3ee0d202fb03d4d0b341be99c1c19312"
+client = TwilioRestClient(account_sid, auth_token)
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
 
 class Loan(Model):
@@ -41,6 +45,12 @@ class Loan(Model):
         if errors:
             return {"status": False, "errors": errors}
         else:
+
+
+            message = client.messages.create(body="You registered",
+                to="+12172550662",    # Replace with your phone number
+                from_="+12173546021") # Replace with your Twilio number
+            print message.sid
             #encrypt password with bcrypt
             pw_hash = self.bcrypt.generate_password_hash(user['password'])
             # insert form info into DB
@@ -59,3 +69,4 @@ class Loan(Model):
             return {'status': True, 'user': validate}
         else:
             return {'status': False}
+

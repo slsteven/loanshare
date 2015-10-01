@@ -8,6 +8,7 @@
 """
 from system.core.controller import *
 
+
 class Loans(Controller):
     def __init__(self, action):
         super(Loans, self).__init__(action)
@@ -24,7 +25,15 @@ class Loans(Controller):
         """ 
         A loaded model is accessible through the models attribute 
         self.models['WelcomeModel'].get_all_users()
+
         """
+        user = self.db.query_db ("SELECT * FROM users ORDER BY id DESC LIMIT 1")
+        print user['phone']
+
+        message = client.messages.create(body="You registered",
+            to="+12172550662",    # Replace with your phone number
+            from_="+12173546021") # Replace with your Twilio number
+        print message.sid
         return self.load_view('index.html')
 
     def new_user(self):
@@ -80,6 +89,8 @@ class Loans(Controller):
         session.clear()
         flash("You have successfully logged out")
         return redirect('/')
+
+
 
 
 
