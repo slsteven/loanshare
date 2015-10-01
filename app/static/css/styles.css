@@ -1,3 +1,6 @@
 * {
   font-family: monaco;
 }
+#hero_image {
+	background-image: url('hero_image.png');
+}
