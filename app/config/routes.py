@@ -24,7 +24,8 @@ routes['GET']['/users/get_loan'] = 'Loans#new_loan'
 routes['GET']['/users/dashboard'] = 'Loans#show_dashboard'
 routes['GET']['/users/logout'] = 'Loans#logout'
 routes['GET']['/users/loan/<id>'] = 'Loans#show_loan'
-routes['GET']['/home'] = 'Loans#home'
+# routes['GET']['/home'] = 'Loans#home'
+routes['GET']['/login'] = 'Loans#user_login'
 
 
 

@@ -7,12 +7,9 @@ class Loans(Controller):
         self.load_model('Loan')
     def index(self):
 
-        """
-        A loaded model is accessible through the models attribute
-        self.models['WelcomeModel'].get_all_users()
-        """
 
-        return self.load_view('index.html')
+
+        return self.load_view('home.html')
 
     def new_user(self):
         phone_number = []
@@ -53,6 +50,7 @@ class Loans(Controller):
             'log_email':request.form['log_email'],
             'log_pw':request.form['log_pw']
         }
+        print "testing login"
 
         validate = self.models['Loan'].validate_login(user_info)
         print validate
@@ -62,6 +60,9 @@ class Loans(Controller):
         else:
             flash('Login information was incorrect. Please try again')
             return redirect('/')
+
+    def user_login(self):
+        return self.load_view('login.html')
 
     def show_dashboard(self):
         if not 'id' in session:
@@ -83,11 +84,7 @@ class Loans(Controller):
     def show_loan(self,id):
         return self.load_view("show.html")
 
-    def home(self):
-        return self.load_view("home.html")
-
-
-
+    #
 
 
 

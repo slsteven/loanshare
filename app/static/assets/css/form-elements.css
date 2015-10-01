@@ -2,14 +2,14 @@
 input[type="text"], 
 textarea, 
 textarea.form-control {
-	height: 50px;
+	height: 40px;
     margin: 0;
     padding: 0 20px;
     vertical-align: middle;
     background: #f8f8f8;
     border: 1px solid #ddd;
     font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 300;
     line-height: 50px;
     color: #888;
