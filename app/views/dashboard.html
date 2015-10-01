@@ -22,10 +22,10 @@
 	<div class="jumbotron">
     	<div class="container">
     		<div class="well col-md-12">
-                <h2>Dashboard</h2>
-                <button><a href="/">Home</a></button>
+                <h2>Welcome {{user['first']}} {{user['last']}}! You are a {{session['account_type']}}</h2>
+                <button><a href="/users/dashboard">Home</a></button>
                 <!-- <button><a href="">Profile</a></button> -->
-                <button><a href="/logout">Logout</a></button>
+                <button><a href="/users/logout">Logout</a></button>
 			</div>
 			<div class='col-md-12'>
                 
@@ -40,14 +40,23 @@
                             <th>Start Date</th>
                             <th>Balance</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                     <!-- Here we will have a for loop to generate table data -->
+                    {%for loan in loan_info%}
                         <tr>
-                            <td></td>
+                            <td><a href="/users/loan/{{loan['id']}}">{{loan['title']}}</a></td>
+                            <td>${{loan['amount']}}</td>
+                            <td>{{loan['interest']}}%</td>
+                            <td>{{loan['term']}}</td>
+                            <td>{{loan['start']}}</td>
+                            <td>{{loan['balance']}}</td>
+                            <td>{{loan['status']}}</td>
+                            <td><button><a href="/users/loan/{{loan['id']}}">View Loan</a></button></td>         
                         </tr>
+                    {%endfor%}
                     </tbody>            
                 </table>
 			</div>

@@ -84,3 +84,20 @@ class Loan(Model):
     def get_borrower_loans(self,id):
         query = "SELECT users.first AS borrower, users2.first AS lender FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE users.id = {}".format(id)
         return self.db.query_db(query)
+
+
+    def lender_table_info(self,id):
+        # Grabs table information
+        return self.db.query_db("SELECT loans.id,loans.title,loans.amount,loans.interest,loans.term,loans.start,loans.status,loans.created_at,ledgers.balance, user_loans.borrower_id, user_loans.lender_id  FROM hackathon.loans LEFT JOIN user_loans ON loans.id = user_loans.loan_id LEFT JOIN ledgers on loans.id = ledgers.loan_id WHERE user_loans.lender_id = {}".format(id))
+
+    def borrower_table_info(self,id):
+        # Grabs table information
+        return self.db.query_db("SELECT loans.id,loans.title,loans.amount,loans.interest,loans.term,loans.start,loans.status,loans.created_at,ledgers.balance, user_loans.borrower_id,user_loans.lender_id FROM hackathon.loans LEFT JOIN user_loans ON loans.id = user_loans.loan_id LEFT JOIN ledgers on loans.id = ledgers.loan_id WHERE user_loans.borrower_id = {}".format(id))
+
+
+    def get_loan_info(self,id):
+        return self.db.query_db("SELECT * FROM loans WHERE loans.id = {}".format(id))
+
+
+
+
