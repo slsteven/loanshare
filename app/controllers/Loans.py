@@ -1,37 +1,32 @@
 from system.core.controller import *
-<<<<<<< HEAD
-=======
 import twilio
->>>>>>> d373a3eae8ac820d3c2be315601452cfe18b114f
+import smtplib
+
 
 from twilio.rest import TwilioRestClient
 account_sid = "AC5557801c4252c083b249d35b5fbef374"
 auth_token  = "3ee0d202fb03d4d0b341be99c1c19312"
 client = TwilioRestClient(account_sid, auth_token)
 
-<<<<<<< HEAD
-import twilio
-=======
->>>>>>> d373a3eae8ac820d3c2be315601452cfe18b114f
+
 
 class Loans(Controller):
     def __init__(self, action):
         super(Loans, self).__init__(action)
         self.load_model('Loan')
     def index(self):
-<<<<<<< HEAD
+
 
         
        
 
 
 
-        return self.load_view('index.html')
-=======
+        # return self.load_view('index.html')
+
 
         return self.load_view('home.html')
 
->>>>>>> d373a3eae8ac820d3c2be315601452cfe18b114f
 
     def new_user(self):
         phone_number = []
@@ -43,7 +38,7 @@ class Loans(Controller):
         phone_number.pop(3)
         phone_number.pop(6)
         phone_number = ''.join(phone_number)
-<<<<<<< HEAD
+
 
         
 
@@ -51,8 +46,8 @@ class Loans(Controller):
 
 
 
-=======
->>>>>>> d373a3eae8ac820d3c2be315601452cfe18b114f
+
+
 
 
         new_user={
@@ -78,6 +73,40 @@ class Loans(Controller):
                 to= phone_txt,    # Replace with your phone number
                 from_="+12173546021") # Replace with your Twilio number
             print message.sid
+
+            TO = new_user['email']
+            SUBJECT = 'WELCOME'
+            TEXT ='Welcome to LOAN SHARE, ' + new_user['first_name'] + "!"
+
+            gmail_sender   = 'loanshare.dojo@gmail.com'
+            gmail_passwd = 'Codingdojo1!'
+
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.ehlo()
+            server.starttls()
+            server.ehlo
+            server.login(gmail_sender,gmail_passwd)
+
+
+            BODY = '\r\n'.join([
+                "TO: %s" % TO,
+                'FROM: %s' % gmail_sender,
+                'SUBJECT: %s' % SUBJECT,
+                '',
+                TEXT
+                ])
+
+            try:
+                server.sendmail(gmail_sender,[TO], BODY)
+                print 'email sent'
+
+            except:
+                print 'error sending email'
+
+
+            server.quit()            
+
+
             
         else:
             for message in validate['errors']:
