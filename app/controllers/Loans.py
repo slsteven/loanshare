@@ -89,29 +89,14 @@ class Loans(Controller):
         'interest': request.form['interest_loan'],
         'start': request.form['start'],
         'end': request.form['end'],
-        'to_email': request.form['person_to_email']
+        'to_email': request.form['person_to_email'],
+        'user_id': session['id']
         }
-        self.load_models['Loan'].new_loan(passed_info)
+        print "GOING INTO MODEL NEW LOAN METHOD"
+        self.models['Loan'].new_loan(passed_info)
+        print "WE GOT PAST NEW LOAN METHOD"
+        return redirect('/users/dashboard')
 
 
     def show_loan(self,id):
         return self.load_view("show.html")
-
-
-
-
-
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
->>>>>>> 15f15cdb1f153883f40b27ed0472184ab2a9ff8c
-=======
-
-
->>>>>>> a9608f1bb91e4d50db129dd5b2fb5ef9d15cb798
