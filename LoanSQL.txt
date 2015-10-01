@@ -1,0 +1,202 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+-- -----------------------------------------------------
+-- Schema hackathon
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema hackathon
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `hackathon` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`users` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `name` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
+  `alias` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
+  `email` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
+  `password` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`appointments`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`appointments` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `user_id` INT(11) NOT NULL COMMENT '',
+  `task` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
+  `date` DATETIME NULL DEFAULT NULL COMMENT '',
+  `time` DATETIME NULL DEFAULT NULL COMMENT '',
+  `created_at` DATETIME NULL DEFAULT NULL COMMENT '',
+  `updated_at` VARCHAR(45) NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  INDEX `fk_appointments_users_idx` (`user_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_appointments_users`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `mydb`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`books`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`books` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `title` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`authors`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`authors` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `book_id` INT(11) NOT NULL COMMENT '',
+  `first_name` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
+  `last_name` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  INDEX `fk_authors_books_idx` (`book_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_authors_books`
+    FOREIGN KEY (`book_id`)
+    REFERENCES `mydb`.`books` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`reviews`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mydb`.`reviews` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '',
+  `user_id` INT(11) NOT NULL COMMENT '',
+  `book_id` INT(11) NOT NULL COMMENT '',
+  `review` TEXT NULL DEFAULT NULL COMMENT '',
+  `rating` INT(11) NULL DEFAULT NULL COMMENT '',
+  `created_at` DATETIME NULL DEFAULT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  INDEX `fk_reviews_books1_idx` (`book_id` ASC)  COMMENT '',
+  INDEX `fk_reviews_users1_idx` (`user_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_reviews_books1`
+    FOREIGN KEY (`book_id`)
+    REFERENCES `mydb`.`books` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reviews_users1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `mydb`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+USE `hackathon` ;
+
+-- -----------------------------------------------------
+-- Table `hackathon`.`loans`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hackathon`.`loans` (
+  `id` INT(11) NOT NULL COMMENT '',
+  `title` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
+  `amount` DECIMAL(10,2) NULL DEFAULT NULL COMMENT '',
+  `intrest` FLOAT NULL DEFAULT NULL COMMENT '',
+  `term` INT NULL DEFAULT NULL COMMENT '',
+  `start` DATETIME NULL DEFAULT NULL COMMENT '',
+  `status` INT(11) NULL DEFAULT NULL COMMENT '',
+  `created_at` DATETIME NULL DEFAULT NULL COMMENT '',
+  `updated_at` DATETIME NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `hackathon`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hackathon`.`users` (
+  `id` INT NOT NULL COMMENT '',
+  `first` VARCHAR(55) NOT NULL COMMENT '',
+  `last` VARCHAR(55) NULL DEFAULT NULL COMMENT '',
+  `email` VARCHAR(255) NULL DEFAULT NULL COMMENT '',
+  `password` VARCHAR(255) NOT NULL COMMENT '',
+  `phone` INT(12) NULL DEFAULT NULL COMMENT '',
+  `account_type` INT(11) NULL DEFAULT NULL COMMENT '',
+  `created_at` DATETIME NULL COMMENT '',
+  `updated_at` DATETIME NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '')
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `hackathon`.`user_loans`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hackathon`.`user_loans` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `loan_ID` INT NOT NULL COMMENT '',
+  `user_ID` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  INDEX `fk_user_loans_loans_idx` (`loan_ID` ASC)  COMMENT '',
+  INDEX `fk_user_loans_users1_idx` (`user_ID` ASC)  COMMENT '',
+  CONSTRAINT `fk_user_loans_loans`
+    FOREIGN KEY (`loan_ID`)
+    REFERENCES `hackathon`.`loans` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_user_loans_users1`
+    FOREIGN KEY (`user_ID`)
+    REFERENCES `hackathon`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `hackathon`.`ledgers`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `hackathon`.`ledgers` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `loan_id` INT NOT NULL COMMENT '',
+  `lender_id` INT NULL COMMENT '',
+  `borrower_id` INT NULL COMMENT '',
+  `balance` DECIMAL(10,2) NULL COMMENT '',
+  `change` DECIMAL(10,2) NULL COMMENT '',
+  `created_at` DATETIME NULL COMMENT '',
+  `updated_at` DATETIME NULL COMMENT '',
+  PRIMARY KEY (`id`)  COMMENT '',
+  INDEX `fk_ledgers_loans1_idx` (`loan_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_ledgers_loans1`
+    FOREIGN KEY (`loan_id`)
+    REFERENCES `hackathon`.`loans` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
