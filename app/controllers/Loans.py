@@ -1,17 +1,17 @@
 from system.core.controller import *
 
+
 class Loans(Controller):
     def __init__(self, action):
         super(Loans, self).__init__(action)
         self.load_model('Loan')
     def index(self):
-<<<<<<< HEAD
+
         """
         A loaded model is accessible through the models attribute
         self.models['WelcomeModel'].get_all_users()
         """
-=======
->>>>>>> 15f15cdb1f153883f40b27ed0472184ab2a9ff8c
+
         return self.load_view('index.html')
 
     def new_user(self):
@@ -24,6 +24,9 @@ class Loans(Controller):
         phone_number.pop(3)
         phone_number.pop(6)
         phone_number = ''.join(phone_number)
+
+
+
 
 
         new_user={
@@ -106,4 +109,9 @@ class Loans(Controller):
 
 
 
+<<<<<<< HEAD
 >>>>>>> 15f15cdb1f153883f40b27ed0472184ab2a9ff8c
+=======
+
+
+>>>>>>> a9608f1bb91e4d50db129dd5b2fb5ef9d15cb798

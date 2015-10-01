@@ -12,6 +12,8 @@
 >>>>>>> 15f15cdb1f153883f40b27ed0472184ab2a9ff8c
 from system.core.model import Model
 import re
+from system.core.controller import *
+
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
 
 class Loan(Model):
@@ -44,6 +46,7 @@ class Loan(Model):
         if errors:
             return {"status": False, "errors": errors}
         else:
+
             #encrypt password with bcrypt
             pw_hash = self.bcrypt.generate_password_hash(user['password'])
             # insert form info into DB
@@ -63,6 +66,7 @@ class Loan(Model):
         else:
             return {'status': False}
 
+<<<<<<< HEAD
     def new_loan(self,passed_info):
         self.db.query_db("INSERT INTO `loans` (`title`, `amount`,`interest`,`term`,`start`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}',NOW(),NOW())".format(passed_info['title'],passed_info['amount'],passed_info['interest'],passed_info['end'],passed_info['start']))
         user_query = "SELECT * FROM users WHERE email = '{}' LIMIT 1".format(passed_info['person_to_email'])
@@ -73,6 +77,8 @@ class Loan(Model):
             pass
         return
 
+=======
+>>>>>>> a9608f1bb91e4d50db129dd5b2fb5ef9d15cb798
 
     def get_user_info(self,id):
         return self.db.query_db("SELECT * FROM users WHERE id = {}".format(id))
