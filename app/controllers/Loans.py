@@ -21,6 +21,9 @@ class Loans(Controller):
         phone_number = ''.join(phone_number)
       
 
+
+
+
         new_user={
             "first_name":request.form['reg_first'],
             "last_name":request.form['reg_last'],
