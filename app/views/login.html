@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Home page</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">        
+        <link rel="stylesheet" href="/static/assets/bootstrap/css/bootstrap.min.css">
+      <!--   <link rel="stylesheet" href="/static/assets/typicons/typicons.min.css"> -->
+        <link rel="stylesheet" href="/static/assets/css/animate.css">
+        <link rel="stylesheet" href="/static/assets/css/magnific-popup.css">
+		<link rel="stylesheet" href="/static/assets/css/form-elements.css">
+        <link rel="stylesheet" href="/static/assets/css/style.css">
+        <link rel="stylesheet" href="/static/assets/css/media-queries.css">
+       <!--  <link rel="stylesheet" href="/static/css/styles.css" type="text/css"> -->
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+       <!--  <link rel="shortcut icon" href="/static/assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/static/assets/ico/apple-touch-icon-57-precomposed.png">
+ -->
+    </head>
+
+    <body>
+    
+        <!-- Loader -->
+    	<div class="loader">
+    		<div class="loader-img">asdfadsf</div>
+    	</div>
+				
+        <!-- Top content -->
+        <div class="top-content">
+        	
+        	<!-- Top menu -->
+			<nav class="navbar navbar-inverse navbar-no-bg" role="navigation" style="background-color:black">
+				<div class="container">
+					<div class="navbar-header" style="color:black">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1" style="color:black">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<h2 style="color:white">LOAN SHARE</h2>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="top-navbar-1">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a class="scroll-link" href="#features">How it works</a></li>
+							<li><a class="scroll-link" href="#how-it-works">Borrow</a></li>
+							<li><a class="scroll-link" href="#about-us">Fund Someone</a></li>
+						<!-- 	<li><a class="btn btn-link-2" href="#">Login</a></li> -->
+						</ul>
+					</div>
+
+					<div class="modal-body">
+			          <form class="form col-md-12 center-block" action="/users/login" method='post'>
+			            <div class="form-group">
+			              <input type="text" name="log_email" class="form-control input-lg" placeholder="Email">
+			            </div>
+			            <div class="form-group">
+			              <input type="password" name="log_pw" class="form-control input-lg" placeholder="Password">
+			            </div>
+			          
+			             <button type="submit" value="Login" class="btn-group btn-group-sm">Login</button>
+			              <span class="pull-right"><a href="/">Register</a></span>
+			           
+			          </form>
+			      </div>
+				{%with messages= get_flashed_messages()%}
+                    {%if messages%}
+                        {%for message in messages%}
+                            <p>{{message}}</p>
+                        {%endfor%}
+                    {%endif%}
+                {%endwith%}
+
+        <!-- Javascript -->
+        <script src="/static/assets/js/jquery-1.11.1.min.js"></script>
+        <script src="/static/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/static/assets/js/jquery.backstretch.min.js"></script>
+        <script src="/static/assets/js/wow.min.js"></script>
+        <script src="/static/assets/js/retina-1.1.0.min.js"></script>
+        <script src="/static/assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="/static/assets/js/scripts.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html>

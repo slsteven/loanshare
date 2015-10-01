@@ -1,0 +1,518 @@
+<!-- <!-- <!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Home page</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">        
+        <link rel="stylesheet" href="/static/assets/bootstrap/css/bootstrap.min.css">
+        <!-- <link rel="stylesheet" href="/static/assets/typicons/typicons.min.css"> -->
+        <link rel="stylesheet" href="/static/assets/css/animate.css">
+        <link rel="stylesheet" href="/static/assets/css/magnific-popup.css">
+		<link rel="stylesheet" href="/static/assets/css/form-elements.css">
+        <link rel="stylesheet" href="/static/assets/css/style.css">
+        <!-- <link rel="stylesheet" href="/static/assets/css/media-queries.css"> -->
+       <!--  <link rel="stylesheet" href="/static/css/styles.css" type="text/css"> -->
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+       <!--  <link rel="shortcut icon" href="/static/assets/ico/favicon.png"> -->
+       <!--  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/assets/ico/apple-touch-icon-72-precomposed.png"> -->
+<!--         <link rel="apple-touch-icon-precomposed" href="/static/assets/ico/apple-touch-icon-57-precomposed.png">
+ -->
+    </head>
+
+    <body>
+    {%with messages= get_flashed_messages()%}
+                    {%if messages%}
+                        {%for message in messages%}
+                            <p>{{message}}</p>
+                        {%endfor%}
+                    {%endif%}
+                {%endwith%}
+    
+        <!-- Loader -->
+    	<div class="loader">
+    		<div class="loader-img">asdfadsf</div>
+    	</div>
+				
+        <!-- Top content -->
+        <div class="top-content">
+        	
+        	<!-- Top menu -->
+			<nav class="navbar navbar-inverse navbar-no-bg" role="navigation" style="background-color:black">
+				<div class="container">
+					<div class="navbar-header" style="color:black">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1" style="color:black">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<h2 style="color:white">LOAN SHARE</h2>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="top-navbar-1">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a class="scroll-link" href="#features">How it works</a></li>
+							<li><a class="scroll-link" href="#how-it-works">Borrow</a></li>
+							<li><a class="scroll-link" href="#about-us">Fund Someone</a></li>
+							<li><a class="btn btn-link-2" href="/login">Login</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+        	
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 text">
+                            <h1 class="wow InLeftBig">Borrowing money from friends and family.<strong></strong></h1>
+                            <div class="description wow InLeftBig">
+                            	<p>A simple platform that provides structure for borrowing money.</p>
+                            </div>
+                            <div class="top-big-link wow InUp">
+                            	<!-- <a class="btn btn-link-1 scroll-link" href="#pricing">Our prices</a> -->
+                            	<a class="btn btn-link-2 scroll-link" href="#features">Fund Someone</a>
+                            	<a class="btn btn-link-2 scroll-link" href="#features">Borrow</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Create Account</h3>
+                        		</div>
+                        	<!-- 	<div class="form-top-right">
+                        			<span aria-hidden="true" class="typcn typcn-pencil"></span>
+                        		</div> -->
+                            </div>
+                            <div class="form-bottom">
+			                    <form role="form" action="/users/register" method="post">
+			                    	<div class="form-group">
+			                    		<label class="sr-only" for="reg_first">First name</label>
+			                        	<input type="text" name="reg_first" placeholder="First name..." class="form-first-name form-control" id="reg_first">
+			                        </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="reg_last">Last name</label>
+			                        	<input type="text" name="reg_last" placeholder="Last name..." class="form-last-name form-control" id="reg_last">
+			                        </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="reg_email">Email</label>
+			                        	<input type="text" name="reg_email" placeholder="Email..." class="form-email form-control" id="reg_email">
+			                        </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="reg_phone">Phone</label>
+			                        	<input type="tel"  pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}'name='reg_phone' id='reg_phone' class="form-control" placeholder="(xxx)xxx-xxxx"  title='Phone Number (Format: (555)555-5555)'>
+			                        	
+			                        	<!-- <input type="text" name="reg_phone" placeholder="Phone..." class="form-email form-control" id="reg_phone"> -->
+			                        </div>
+			                        <div class="form-group">
+			                        <label for="acct_type">Account Type
+	    								<select name="acct_type" id="acct_type">
+	    									<option value="1">Lender</option>
+	    									<option value="2">Borrower</option>
+	    								</select>
+    								</label>
+    								</div>
+    								<div class="form-group">
+				    					<label class="sr-only" for="reg_pw">Password: </label>
+				    					<input type="password" name='reg_pw' id='reg_pw' class="form-control" placeholder="Password...">
+				    				</div>
+									<div class="form-group">		
+				    					<label class="sr-only" for="reg_pw_confirm">Confirm Passwor</label>
+				    					<input type="password" name='reg_pw_confirm' id='reg_pw_confirm' class="btn" placeholder="Confirm password...">
+				    				</div>
+				    				<button type="submit" value="Register Now" class="btn-group btn-group-sm">Create Account!</button>
+			                    
+			                        <div class="form-links">
+			                        	<a href="#" class="launch-modal" data-modal-id="modal-privacy">Privacy Policy</a> - 
+			                        	<a href="#" class="launch-modal" data-modal-id="modal-faq">FAQ</a>
+			                        </div>
+			                    </form>
+		                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+       
+
+		<!-- More features -->
+        <div class="more-features-container section-container section-container-gray-bg">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-sm-12 more-features section-description wow In">
+	                    <h2>Borrowing money in 4 simple steps</h2>
+	                    <div class="divider-1 wow InUp"><span></span></div>
+	                </div>
+	            </div>
+	            <div class="row">
+	            	<div class="col-sm-5 more-features-box wow InLeft">
+	                    <img src="/static/assets/img/devices/pc.png" alt="">
+	                </div>
+	                <div class="col-sm-7 more-features-box wow InUp">
+	                    <div class="more-features-box-text">
+	                    	<div class="more-features-box-text-icon">
+	                    		<span aria-hidden="true" class="typcn typcn-attachment"></span>
+	                    	</div>
+	                    	<h3>Register and pick your loan conditions</h3>
+	                    	<div class="more-features-box-text-description">
+	                    		Fill out a request form for you to send to potential lenders with LoanShares document template. You pick the conditions!
+	                    	</div>
+	                    </div>
+	                    <div class="more-features-box-text">
+	                    	<div class="more-features-box-text-icon">
+	                    		<span aria-hidden="true" class="typcn typcn-user"></span>
+	                    	</div>
+	                    	<h3>Send to friends and family</h3>
+	                    	<div class="more-features-box-text-description">
+	                    		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
+	                    		Ut wisi enim ad minim veniam, quis nostrud.
+	                    	</div>
+	                    </div>
+	                    <div class="more-features-box-text">
+	                    	<div class="more-features-box-text-icon">
+	                    		<span aria-hidden="true" class="typcn typcn-user"></span>
+	                    	</div>
+	                    	<h3>Agree on terms and lenders recieve money in a few days</h3>
+	                    	<div class="more-features-box-text-description">
+	                    		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
+	                    		Ut wisi enim ad minim veniam, quis nostrud.
+	                    	</div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+        </div>
+        
+        <!-- Always beautiful -->
+        <div class="always-beautiful-container section-container">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-sm-12 always-beautiful section-description wow In">
+	                    <h2>Your word matters</h2>
+	                    <div class="divider-1 wow InUp"><span></span></div>
+	                </div>
+	            </div>
+	            <div class="row">
+	            	<div class="col-sm-7 always-beautiful-box wow InLeft">
+	                    <div class="always-beautiful-box-text always-beautiful-box-text-left">
+	                    	<h3>Backstory-</h3>
+	                    	<p class="medium-paragraph">
+	                    		Loan share is the perfect balance between borrowing money from a bank and asking a friend or family. <br>
+
+	                    		sed do eiusmod tempor incididunt ut labore et. Ut wisi enim ad minim veniam, quis nostrud.
+	                    	</p>
+	                    	<p>
+	                    		Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
+	                    		Ut wisi enim ad minim veniam, quis nostrud. 
+	                    		Exerci tation ullamcorper suscipit 
+	                    	</p>
+	                    </div>
+	                </div>
+	                <div class="col-sm-5 always-beautiful-box wow InUp">
+	                    <img src="/static/assets/img/devices/pc2.png" alt="">
+	                </div>
+	            </div>
+	        </div>
+        </div>
+        
+       
+        
+        <!-- About us -->
+        <div class="about-us-container section-container">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-sm-12 about-us section-description wow In">
+	                    <h2>Commonly asked questions</h2>
+	                    <div class="divider-1 wow InUp"><span></span></div>
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="col-sm-4 about-us-box wow InUp">
+		                <div class="about-us-photo">
+		                	<img src="/static/assets/img/about/1.jpg" alt="" data-at2x="/static/assets/img/about/1.jpg">
+		                	<div class="about-us-role">Marketing</div>
+		                </div>
+	                    <h3>Darrick</h3>
+	                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+	                    <div class="about-us-social">
+		                	<a href="#"><span class="typcn typcn-social-facebook"></span></a>
+		                	<a href="#"><span class="typcn typcn-social-dribbble"></span></a>
+		                    <a href="#"><span class="typcn typcn-social-twitter"></span></a>
+		                </div>
+	                </div>
+	                <div class="col-sm-4 about-us-box wow InDown">
+		                <div class="about-us-photo">
+		                	<img src="/static/assets/img/about/2.jpg" alt="" data-at2x="/static/assets/img/about/2.jpg">
+		                	<div class="about-us-role">Designer</div>
+		                </div>
+	                    <h3>Nick</h3>
+	                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+	                    <div class="about-us-social">
+		                	<a href="#"><span class="typcn typcn-social-facebook"></span></a>
+		                	<a href="#"><span class="typcn typcn-social-dribbble"></span></a>
+		                    <a href="#"><span class="typcn typcn-social-twitter"></span></a>
+		                </div>
+	                </div>
+	                <div class="col-sm-4 about-us-box wow InUp">
+		                <div class="about-us-photo">
+		                	<img src="/static/assets/img/about/3.jpg" alt="" data-at2x="/static/assets/img/about/3.jpg">
+		                	<div class="about-us-role">Developer</div>
+		                </div>
+	                    <h3>Darrick/h3>
+	                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.</p>
+	                    <div class="about-us-social">
+		                	<a href="#"><span class="typcn typcn-social-facebook"></span></a>
+		                	<a href="#"><span class="typcn typcn-social-dribbble"></span></a>
+		                    <a href="#"><span class="typcn typcn-social-twitter"></span></a>
+		                </div>
+	                </div>
+	            </div>
+	        </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="testimonials-container section-container section-container-gray-bg">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-sm-12 testimonials section-description wow In">
+	                    <h2>Testimonials</h2>
+	                    <div class="divider-1 wow InUp"><span></span></div>
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="col-sm-10 col-sm-offset-1 testimonial-list wow InUp">
+	                	<div role="tabpanel">
+	                		<!-- Tab panes -->
+	                		<div class="tab-content">
+	                			<div role="tabpanel" class="tab-pane  in active" id="tab1">
+	                				<div class="testimonial-image">
+	                					<img src="/static/assets/img/testimonials/1.jpg" alt="" data-at2x="/static/assets/img/testimonials/1.jpg">
+	                					<div class="testimonial-icon">
+	                						<span aria-hidden="true" class="typcn typcn-pin"></span>
+	                					</div>
+	                				</div>
+	                				<div class="testimonial-text">
+		                                <p>
+		                                	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. 
+		                                	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. 
+		                                	Lorem ipsum dolor sit amet, consectetur..."<br>
+		                                	<a href="#">Lorem Ipsum, dolor.co.uk</a>
+		                                </p>
+	                                </div>
+	                			</div>
+	                			<div role="tabpanel" class="tab-pane " id="tab2">
+	                				<div class="testimonial-image">
+	                					<img src="/static/assets/img/testimonials/2.jpg" alt="" data-at2x="/static/assets/img/testimonials/2.jpg">
+	                					<div class="testimonial-icon">
+	                						<span aria-hidden="true" class="typcn typcn-pin"></span>
+	                					</div>
+	                				</div>
+	                				<div class="testimonial-text">
+		                                <p>
+		                                	"Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip 
+		                                	ex ea commodo consequat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit 
+		                                	lobortis nisl ut aliquip ex ea commodo consequat..."<br>
+		                                	<a href="#">Minim Veniam, nostrud.com</a>
+		                                </p>
+	                                </div>
+	                			</div>
+	                			<div role="tabpanel" class="tab-pane " id="tab3">
+	                				<div class="testimonial-image">
+	                					<img src="/static/assets/img/testimonials/3.jpg" alt="" data-at2x="/static/assets/img/testimonials/3.jpg">
+	                					<div class="testimonial-icon">
+	                						<span aria-hidden="true" class="typcn typcn-pin"></span>
+	                					</div>
+	                				</div>
+	                				<div class="testimonial-text">
+		                                <p>
+		                                	"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. 
+		                                	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. 
+		                                	Lorem ipsum dolor sit amet, consectetur..."<br>
+		                                	<a href="#">Lorem Ipsum, dolor.co.uk</a>
+		                                </p>
+	                                </div>
+	                			</div>
+	                			<div role="tabpanel" class="tab-pane " id="tab4">
+	                				<div class="testimonial-image">
+	                					<img src="/static/assets/img/testimonials/4.jpg" alt="" data-at2x="/static/assets/img/testimonials/4.jpg">
+	                					<div class="testimonial-icon">
+	                						<span aria-hidden="true" class="typcn typcn-pin"></span>
+	                					</div>
+	                				</div>
+	                				<div class="testimonial-text">
+		                                <p>
+		                                	"Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip 
+		                                	ex ea commodo consequat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit 
+		                                	lobortis nisl ut aliquip ex ea commodo consequat..."<br>
+		                                	<a href="#">Minim Veniam, nostrud.com</a>
+		                                </p>
+	                                </div>
+	                			</div>
+	                		</div>
+	                		<!-- Nav tabs -->
+	                		<ul class="nav nav-tabs" role="tablist">
+	                			<li role="presentation" class="active">
+	                				<a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab"></a>
+	                			</li>
+	                			<li role="presentation">
+	                				<a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab"></a>
+	                			</li>
+	                			<li role="presentation">
+	                				<a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab"></a>
+	                			</li>
+	                			<li role="presentation">
+	                				<a href="#tab4" aria-controls="tab4" role="tab" data-toggle="tab"></a>
+	                			</li>
+	                		</ul>
+	                	</div>
+	                </div>
+	            </div>
+	        </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+	        <div class="container">
+	        	<div class="row">
+                    <div class="col-sm-12 footer-social">
+                    	<a href="#"><span class="typcn typcn-social-facebook"></span></a>
+                    	<a href="#"><span class="typcn typcn-social-dribbble"></span></a>
+                    	<a href="#"><span class="typcn typcn-social-twitter"></span></a>
+                    	<a href="#"><span class="typcn typcn-social-google-plus"></span></a>
+                    	<a href="#"><span class="typcn typcn-social-instagram"></span></a>
+                    	<a href="#"><span class="typcn typcn-social-pinterest"></span></a>
+                    </div>
+	            </div>
+	            <div class="row">
+                    <div class="col-sm-12 footer-copyright">
+                    	&copy; Marco Bootstrap Template by <a href="http://azmind.com">Azmind</a>.
+                    </div>
+                </div>
+	        </div>
+        </footer>
+        
+        
+        <!-- MODAL: Privacy policy -->
+        <div class="modal " id="modal-privacy" tabindex="-1" role="dialog" aria-labelledby="modal-privacy-label" aria-hidden="true">
+        	<div class="modal-dialog">
+        		<div class="modal-content">
+        			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">
+        					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        				</button>
+        				<h2 class="modal-title" id="modal-privacy-label">Privacy policy</h2>
+        			</div>
+        			<div class="modal-body">
+        				<h3>1. Dolor sit amet</h3>
+        				<p>
+	                    	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
+	                    	labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+	                    </p>
+	                    <ul>
+	                    	<li>Easy To Use</li>
+	                    	<li>Awesome Design</li>
+	                    	<li>Cloud Based</li>
+	                    </ul>
+	                    <p>
+	                    	Ut wisi enim ad minim veniam, <a href="#">quis nostrud exerci tation</a> ullamcorper suscipit lobortis nisl ut aliquip ex ea 
+	                    	commodo consequat nostrud tation.
+	                    </p>
+	                    <h3>2. Sed do eiusmod</h3>
+	                    <p>
+	                    	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
+	                    	labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+	                    </p>
+	                    <h3>3. Nostrud exerci tation</h3>
+	                    <p>
+	                    	Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea 
+	                    	commodo consequat nostrud tation.
+	                    </p>
+	                    <p>
+	                    	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
+	                    	labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+	                    </p>
+        			</div>
+        			<div class="modal-footer">
+        				<button type="button" class="btn" data-dismiss="modal">Close</button>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+        
+        <!-- MODAL: Frequent questions -->
+        <div class="modal " id="modal-faq" tabindex="-1" role="dialog" aria-labelledby="modal-faq-label" aria-hidden="true">
+        	<div class="modal-dialog">
+        		<div class="modal-content">
+        			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal">
+        					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        				</button>
+        				<h2 class="modal-title" id="modal-faq-label">Frequent questions</h2>
+        			</div>
+        			<div class="modal-body">
+        				<h3>1. Lorem ipsum dolor?</h3>
+        				<p>
+	                    	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
+	                    	labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+	                    </p>
+	                    <h3>2. Ut wisi enim ad minim?</h3>
+	                    <p>
+	                    	Ut wisi enim ad minim veniam, <a href="#">quis nostrud exerci tation</a> ullamcorper suscipit lobortis nisl ut aliquip ex ea 
+	                    	commodo consequat nostrud tation.
+	                    </p>
+	                    <h3>3. Sed do eiusmod tempor?</h3>
+	                    <p>
+	                    	Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+	                    </p>
+	                    <h3>4. Nostrud exerci tation?</h3>
+	                    <p>
+	                    	Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea 
+	                    	commodo consequat nostrud tation.
+	                    </p>
+	                    <h3>5. Consectetur adipisicing elit?</h3>
+	                    <p>
+	                    	Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut 
+	                    	labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+	                    </p>
+        			</div>
+        			<div class="modal-footer">
+        				<button type="button" class="btn" data-dismiss="modal">Close</button>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+
+
+        <!-- Javascript -->
+        <script src="/static/assets/js/jquery-1.11.1.min.js"></script>
+        <script src="/static/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/static/assets/js/jquery.backstretch.min.js"></script>
+        <script src="/static/assets/js/wow.min.js"></script>
+        <script src="/static/assets/js/retina-1.1.0.min.js"></script>
+        <script src="/static/assets/js/jquery.magnific-popup.min.js"></script>
+        <script src="/static/assets/js/scripts.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html> --> -->
