@@ -13,11 +13,7 @@ class Loans(Controller):
         self.load_model('Loan')
     def index(self):
 
-
-
-
         return self.load_view('home.html')
-        
 
 
     def new_user(self):
@@ -69,7 +65,7 @@ class Loans(Controller):
         print "testing login"
 
         validate = self.models['Loan'].validate_login(user_info)
-        print validate
+
         if validate['status']:
             session['id'] = validate['user'][0]['id']
             return redirect('/users/dashboard')
@@ -84,27 +80,36 @@ class Loans(Controller):
         if not 'id' in session:
             flash("You must be logged in to view this page")
             return redirect('/')
-
         user_info = self.models['Loan'].get_user_info(session['id'])
-        # if user_info[0].account_type == "2":
-        #     self.models['Loan'].get_borrower_loans(session['id'])
-        return self.load_view("dashboard.html")
+
+        #check if user is a lender or borrower and renders information accordingly
+        if user_info[0]['account_type'] == "1":
+            loan_info = self.models['Loan'].lender_table_info(session['id'])
+            session['account_type'] = "Lender"
+        elif user_info[0]['account_type'] == "2":
+            loan_info = self.models['Loan'].borrower_table_info(session['id'])
+            session['account_type'] = "Borrower"
+        return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0])
 
     def logout(self):
         session.clear()
         flash("You have successfully logged out")
         return redirect('/')
+    ######SHOWS LOAN ON SHOW.HTML##########
+    def show_loan(self,loan_id):
+        loan_info = self.models['Loan'].get_loan_info(loan_id)
+        user_info = self.models['Loan'].get_user_info(session['id'])
 
-
-
-    def show_loan(self,id):
-        return self.load_view("show.html")
-
-    #
-
-
-
-
+        # return self.load_view("show.html")
+        if user_info[0]['account_type'] == "1":
+            #user is a lender
+            return self.load_view("show.html",loan=loan_info[0],user=user_info[0])
+        elif user_info[0]['account_type'] == "2":
+            #user is a borrower
+            lender_query = self.models['Loan'].borrower_table_info(session['id'])
+            lender_info = self.models['Loan'].get_user_info(lender_query[0]['lender_id'])
+            print lender_info
+            return self.load_view("show.html",loan=loan_info[0],user=user_info[0],lender=lender_info[0])
 
 
 
@@ -128,6 +133,3 @@ class Loans(Controller):
         print "WE GOT PAST NEW LOAN METHOD"
         return redirect('/users/dashboard')
 
-
-    def show_loan(self,id):
-        return self.load_view("show.html")
