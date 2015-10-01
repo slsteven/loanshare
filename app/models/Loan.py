@@ -1,3 +1,4 @@
+
 from system.core.model import Model
 import re
 from system.core.controller import *
@@ -23,7 +24,7 @@ class Loan(Model):
         ##### Phone Validation #####
         if not user['phone']:
             errors.append('Phone cannot be empty')
-        ##### PW Validation #####    
+        ##### PW Validation #####
         if not user['password']:
             errors.append('Password cannot be blank')
         elif len(user['password']) < 8:
@@ -54,6 +55,27 @@ class Loan(Model):
         else:
             return {'status': False}
 
+### this is the new loan method it checks to see if the user is in the databases
+    def new_loan(self,passed_info):
+        user_query = "SELECT * FROM users WHERE email = '{}' LIMIT 1".format(passed_info['to_email'])
+        validate = self.db.query_db(user_query)
+        if validate == []:
+            # right now theres no way to hold the loan id info so just tell the user that the other user must have a registered account
+            # in order to successfuly petition the loan
+            print "there is no user by that email"
+        else:
+            print "IF WE GOT HERE THEN WE FOUND THE EMAIL OF THE PERSON WE WANT TO SEND THE LOAN OFFER TO"
+            # inserting into loans table all of the user passed information
+            self.db.query_db("INSERT INTO `loans` (`title`, `amount`,`intrest`,`term`,`start`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}',NOW(),NOW())".format(passed_info['title'],passed_info['amount'],passed_info['interest'],passed_info['end'],passed_info['start']))
+            # creating a var that gathers all the info of the potential lender by querying the db for the user inserted email
+            info_of_lender = self.db.query_db("SELECT users.id, users.first, users.last FROM users WHERE email = '{}'".format(validate[0]['email']))
+            #By gathering the title of the newly inserted loan we can grab the loan id and any other piece of info thats nessecery
+            info_of_loan = self.db.query_db("SELECT * FROM loans WHERE title = '{}' ".format(passed_info['title']))
+            # by takinf all of the newly gathered info from the above two select statments we can then correctly update the users_loans table
+            # take special note that passed_info[0]['id'] is the session['id'] variable
+            self.db.query_db("INSERT INTO user_loans (loan_ID , borrower_ID , lender_ID) VALUES('{}','{}','{}')".format(info_of_loan[0]['id'],passed_info['user_id'],info_of_lender[0]['id']))
+            print "IF WE GOT HERE THEN WE INSERT AND SELECTED ALL MYSQL QUERIES SUCCESFULLY"
+        return
 
     def get_user_info(self,id):
         return self.db.query_db("SELECT * FROM users WHERE id = {}".format(id))
@@ -62,16 +84,3 @@ class Loan(Model):
     def get_borrower_loans(self,id):
         query = "SELECT users.first AS borrower, users2.first AS lender FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE users.id = {}".format(id)
         return self.db.query_db(query)
-
-
-
-
-
-
-
-
-
-
-
-
-

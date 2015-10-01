@@ -15,10 +15,21 @@
 		});
     </script>
     <style type='text/css'>
-	
+
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <p class="navbar-text">Home</p>
+            <p class="navbar-text">Login</p>
+            <p class="navbar-text">Get a Loan</p>
+        </div>
+    </nav>
+    <div class="container">
+        <div id="hero"></div>
+    </div>
+
 	<div class="jumbotron">
     	<div class="container">
     		<div class="well col-md-12">
@@ -35,7 +46,7 @@
     				<label for="log_pw">Password: </label>
     				<input type="password" name='log_pw' id='log_pw' class="form-control" placeholder="Enter your Password">
     				<input type="submit" value="Post It!" class="btn btn-success">
-    			</form>  
+    			</form>
     		</div>
     		<div class="col-md-6">
     			<h4>Don't have an account? Register below!</h4>
@@ -47,7 +58,9 @@
     				<label for="reg_email">E-mail: </label>
     				<input type="text" name='reg_email' id='reg_email' class="form-control" placeholder="">
     				<label for="reg_phone">Phone: </label>
-    				<input type="tel"  pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}'name='reg_phone' id='reg_phone' class="form-control" placeholder="(xxx)xxx-xxxx"  title='Phone Number (Format: (555)555-5555)'>
+
+    					<input type="tel"  pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}'name='reg_phone' id='reg_phone' class="form-control" placeholder="(xxx)xxx-xxxx"  title='Phone Number (Format: (555)555-5555)'>
+
     				<label for="acct_type">Account Type
 	    				<select name="acct_type" id="acct_type">
 	    					<option value="1">Lender</option>
@@ -59,7 +72,7 @@
     				<label for="reg_pw_confirm">Confirm Password: </label>
     				<input type="password" name='reg_pw_confirm' id='reg_pw_confirm' class="form-control" placeholder="">
     				<input type="submit" value="Register Now" class="btn btn-success">
-    			</form>  
+    			</form>
     			{%with messages= get_flashed_messages()%}
                     {%if messages%}
                         {%for message in messages%}
@@ -68,7 +81,7 @@
                     {%endif%}
                 {%endwith%}
     		</div>
-    	
+
     	</div>
     </div>
 </body>
