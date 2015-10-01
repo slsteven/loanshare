@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """
     Sample Model File
 
@@ -7,6 +8,8 @@
 
     Create a model using this template.
 """
+=======
+>>>>>>> 15f15cdb1f153883f40b27ed0472184ab2a9ff8c
 from system.core.model import Model
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
@@ -59,6 +62,7 @@ class Loan(Model):
             return {'status': True, 'user': validate}
         else:
             return {'status': False}
+
     def new_loan(self,passed_info):
         self.db.query_db("INSERT INTO `loans` (`title`, `amount`,`interest`,`term`,`start`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}',NOW(),NOW())".format(passed_info['title'],passed_info['amount'],passed_info['interest'],passed_info['end'],passed_info['start']))
         user_query = "SELECT * FROM users WHERE email = '{}' LIMIT 1".format(passed_info['person_to_email'])
@@ -66,4 +70,14 @@ class Loan(Model):
         if validate == []:
             pass
         elif:
-            pass 
+            pass
+        return
+
+
+    def get_user_info(self,id):
+        return self.db.query_db("SELECT * FROM users WHERE id = {}".format(id))
+
+    #Retrieves loans for borrowers
+    def get_borrower_loans(self,id):
+        query = "SELECT users.first AS borrower, users2.first AS lender FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE users.id = {}".format(id)
+        return self.db.query_db(query)

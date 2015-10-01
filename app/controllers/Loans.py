@@ -1,30 +1,17 @@
-"""
-    Sample Controller File
-
-    A Controller should be in charge of responding to a request.
-    Load models to interact with the database and load views to render them to the client.
-
-    Create a controller using this template
-"""
 from system.core.controller import *
 
 class Loans(Controller):
     def __init__(self, action):
         super(Loans, self).__init__(action)
         self.load_model('Loan')
-        """
-            This is an example of loading a model.
-            Every controller has access to the load_model method.
-
-            self.load_model('WelcomeModel')
-        """
-
-    """ This is an example of a controller method that will load a view for the client """
     def index(self):
+<<<<<<< HEAD
         """
         A loaded model is accessible through the models attribute
         self.models['WelcomeModel'].get_all_users()
         """
+=======
+>>>>>>> 15f15cdb1f153883f40b27ed0472184ab2a9ff8c
         return self.load_view('index.html')
 
     def new_user(self):
@@ -32,12 +19,12 @@ class Loans(Controller):
 
         for x in request.form['reg_phone']:
             phone_number.append(x)
-        
+
         phone_number.pop(0)
         phone_number.pop(3)
         phone_number.pop(6)
         phone_number = ''.join(phone_number)
-      
+
 
         new_user={
             "first_name":request.form['reg_first'],
@@ -74,12 +61,20 @@ class Loans(Controller):
             return redirect('/')
 
     def show_dashboard(self):
+        if not 'id' in session:
+            flash("You must be logged in to view this page")
+            return redirect('/')
+
+        user_info = self.models['Loan'].get_user_info(session['id'])
+        # if user_info[0].account_type == "2":
+        #     self.models['Loan'].get_borrower_loans(session['id'])
         return self.load_view("dashboard.html")
 
     def logout(self):
         session.clear()
         flash("You have successfully logged out")
         return redirect('/')
+
 
     def new_loan(self):
         return self.load_view('loan_new.html')
@@ -94,3 +89,21 @@ class Loans(Controller):
         'to_email': request.form['person_to_email']
         }
         self.load_models['Loan'].new_loan(passed_info)
+
+
+    def show_loan(self,id):
+        return self.load_view("show.html")
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 15f15cdb1f153883f40b27ed0472184ab2a9ff8c

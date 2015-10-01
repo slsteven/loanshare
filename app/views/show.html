@@ -15,7 +15,7 @@
 		});
     </script>
     <style type='text/css'>
-
+	
     </style>
 </head>
 <body>
@@ -28,33 +28,27 @@
                 <button><a href="/logout">Logout</a></button>
 			</div>
 			<div class='col-md-12'>
-                
-				<table id="dashboard" class='col-md-12' >
-                    <h2>Loan Offers</h2>
+                <table id='ledger' class='col-md-12'>
+                    <h2>Ledger for [LOAN TITLE]</h2>
+                    <p>[STARTING AMOUNT]</p>
+                    <p>[INTEREST RATE]</p>
+                    <p>[LOAN TERM]</p>
+                    <p>[LENDER]</p>
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Amount</th>
-                            <th>Interest Rate</th>
-                            <th>Loan Term</th>
-                            <th>Start Date</th>
-                            <th>Balance</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th>[DATE]</th>
+                            <th>[BALANCE]</th>
+                            <th>[CHANGE]</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <!-- Here we will have a for loop to generate table data -->
                         <tr>
-                            <td></td>
+                           
                         </tr>
-                    </tbody>            
+                    </tbody>
                 </table>
 			</div>
 
     </div>
-			<form class="" role="form" action="/users/get_loan" method='get'>
-				<input type="submit" value="New Loan" class="btn btn-success">
-			</form>
 </body>
 </html>
