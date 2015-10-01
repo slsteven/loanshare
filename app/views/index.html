@@ -47,7 +47,7 @@
     				<label for="reg_email">E-mail: </label>
     				<input type="text" name='reg_email' id='reg_email' class="form-control" placeholder="">
     				<label for="reg_phone">Phone: </label>
-    				<input type="phone" name='reg_phone' id='reg_phone' class="form-control" placeholder="">
+    				<input type="tel"  pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}'name='reg_phone' id='reg_phone' class="form-control" placeholder="(xxx)xxx-xxxx"  title='Phone Number (Format: (555)555-5555)'>
     				<label for="acct_type">Account Type
 	    				<select name="acct_type" id="acct_type">
 	    					<option value="1">Lender</option>
