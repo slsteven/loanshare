@@ -21,8 +21,8 @@ class Loans(Controller):
 
     """ This is an example of a controller method that will load a view for the client """
     def index(self):
-        """ 
-        A loaded model is accessible through the models attribute 
+        """
+        A loaded model is accessible through the models attribute
         self.models['WelcomeModel'].get_all_users()
         """
         return self.load_view('index.html')
@@ -54,7 +54,7 @@ class Loans(Controller):
         }
 
         validate = self.models['Loan'].validate_login(user_info)
-        print validate 
+        print validate
         if validate['status']:
             session['id'] = validate['user'][0]['id']
             return redirect('/users/dashboard')
@@ -70,17 +70,16 @@ class Loans(Controller):
         flash("You have successfully logged out")
         return redirect('/')
 
+    def new_loan(self):
+        return self.load_view('loan_new.html')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def create_loan(self):
+        passed_info = {
+        'title' : request.form['name_loan'],
+        'amount':request.form['amount_loan'],
+        'interest': request.form['interest_loan'],
+        'start': request.form['start'],
+        'end': request.form['end'],
+        'to_email': request.form['person_to_email']
+        }
+        self.load_models['Loan'].new_loan(passed_info)

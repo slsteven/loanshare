@@ -1,7 +1,7 @@
-""" 
+"""
     Sample Model File
 
-    A Model should be in charge of communicating with the Database. 
+    A Model should be in charge of communicating with the Database.
     Define specific model method that query the database for information.
     Then call upon these model method in your controller.
 
@@ -30,7 +30,7 @@ class Loan(Model):
         ##### Phone Validation #####
         if not user['phone']:
             errors.append('Phone cannot be empty')
-        ##### PW Validation #####    
+        ##### PW Validation #####
         if not user['password']:
             errors.append('Password cannot be blank')
         elif len(user['password']) < 8:
@@ -59,3 +59,8 @@ class Loan(Model):
             return {'status': True, 'user': validate}
         else:
             return {'status': False}
+    def new_loan(self,passed_info):
+        self.db.query_db("INSERT INTO `loans` (`title`, `amount`,`interest`,`term`,`start`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}',NOW(),NOW())".format(passed_info['title'],passed_info['amount'],passed_info['interest'],passed_info['end'],passed_info['start']))
+        user_query = "SELECT * FROM users WHERE email = '{}' LIMIT 1".format(passed_info['person_to_email'])
+        validate = self.db.query_db(user_query)
+        if validate:
