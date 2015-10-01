@@ -23,6 +23,7 @@ routes['POST']['/users/loan_form'] = 'Loans#create_loan'
 routes['GET']['/users/dashboard'] = 'Loans#show_dashboard'
 routes['GET']['/users/logout'] = 'Loans#logout'
 routes['GET']['/users/loan/<id>'] = 'Loans#show_loan'
+routes['GET']['/home'] = 'Loans#home'
 
 
 

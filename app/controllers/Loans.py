@@ -1,5 +1,5 @@
 from system.core.controller import *
-
+import twilio
 
 class Loans(Controller):
     def __init__(self, action):
@@ -77,7 +77,8 @@ class Loans(Controller):
     def show_loan(self,id):
         return self.load_view("show.html")
 
-
+    def home(self):
+        return self.load_view("home.html")
 
 
 
