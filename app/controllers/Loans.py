@@ -33,8 +33,39 @@ class Loans(Controller):
             "last_name":request.form['reg_last'],
             "email":request.form['reg_email'],
             "phone":request.form['reg_phone'],
+            "acct_type":request.form['acct_type'],
             "password":request.form['reg_pw'],
             "password_confirm":request.form['reg_pw_confirm']
         }
-        pass
-        # validate = self.models['Loan'].validate_reg(new_user);
+
+        validate = self.models['Loan'].validate_reg(new_user);
+
+        if validate['status']:
+            flash('You have successfully registered!')
+        else:
+            for message in validate['errors']:
+                flash(message)
+        return redirect('/')
+
+    def login(self):
+        user_info={
+            'log_email':request.form['log_email'],
+            'log_pw':request.form['log_pw']
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

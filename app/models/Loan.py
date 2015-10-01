@@ -8,6 +8,8 @@
     Create a model using this template.
 """
 from system.core.model import Model
+import re
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9\.\+_-]+@[a-zA-Z0-9\._-]+\.[a-zA-Z]*$')
 
 class Loan(Model):
     def a__init__(self):
@@ -16,21 +18,24 @@ class Loan(Model):
     def validate_reg(self,user):
         errors = []
         ##### Name Validation #####
-        if not user['name']:
+        if not user['first_name'] or not user['last_name']:
             errors.append('Name cannot be blank')
-        elif len(user['name']) < 2:
+        elif len(user['first_name']) < 2 or len(user['last_name']) < 2:
             errors.append('Name must be at least 2 characters long')
         ##### Email Validation #####
         if not user['email']:
             errors.append('Email cannot be blank')
         elif not EMAIL_REGEX.match(user['email']):
             errors.append('Email format must be valid!')
+        ##### Phone Validation #####
+        if not user['phone']:
+            errors.append('Phone cannot be empty')
         ##### PW Validation #####    
         if not user['password']:
             errors.append('Password cannot be blank')
         elif len(user['password']) < 8:
             errors.append('Password must be at least 8 characters long')
-        elif user['password'] != user['pw_confirm']:
+        elif user['password'] != user['password_confirm']:
             errors.append('Password and confirmation must match!')
 
         if errors:
@@ -39,8 +44,8 @@ class Loan(Model):
             #encrypt password with bcrypt
             pw_hash = self.bcrypt.generate_password_hash(user['password'])
             # insert form info into DB
-            
-            self.db.query_db("INSERT INTO `tasks`.`users` (`name`, `email`, `password`, `birthday`,`created_at`) VALUES ('{}', '{}','{}', '{}', NOW())".format(user['name'],user['email'],pw_hash,user['birthday']))
+            self.db.query_db("INSERT INTO `users` (`first`, `last`,`email`,`password`,`phone`,`account_type`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}','{}',NOW(),NOW())".format(user['first_name'],user['last_name'],user['email'],pw_hash,user['phone'],user['acct_type']))
+
             return {'status':True}
 
     def validate_login(self,user):

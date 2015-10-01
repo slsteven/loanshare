@@ -48,14 +48,25 @@
     				<input type="text" name='reg_email' id='reg_email' class="form-control" placeholder="">
     				<label for="reg_phone">Phone: </label>
     				<input type="phone" name='reg_phone' id='reg_phone' class="form-control" placeholder="">
-    				<label for="acct_type">Account Type</label>
-    				<input type="radio">
+    				<label for="acct_type">Account Type
+	    				<select name="acct_type" id="acct_type">
+	    					<option value="1">Lender</option>
+	    					<option value="2">Borrower</option>
+	    				</select>
+    				</label>
     				<label for="reg_pw">Password: </label>
     				<input type="password" name='reg_pw' id='reg_pw' class="form-control" placeholder="">
     				<label for="reg_pw_confirm">Confirm Password: </label>
     				<input type="password" name='reg_pw_confirm' id='reg_pw_confirm' class="form-control" placeholder="">
     				<input type="submit" value="Register Now" class="btn btn-success">
     			</form>  
+    			{%with messages= get_flashed_messages()%}
+                    {%if messages%}
+                        {%for message in messages%}
+                            <p>{{message}}</p>
+                        {%endfor%}
+                    {%endif%}
+                {%endwith%}
     		</div>
     	
     	</div>
