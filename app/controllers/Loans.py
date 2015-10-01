@@ -1,16 +1,23 @@
 from system.core.controller import *
+
 from twilio.rest import TwilioRestClient
 account_sid = "AC5557801c4252c083b249d35b5fbef374"
 auth_token  = "3ee0d202fb03d4d0b341be99c1c19312"
 client = TwilioRestClient(account_sid, auth_token)
+
+import twilio
 
 class Loans(Controller):
     def __init__(self, action):
         super(Loans, self).__init__(action)
         self.load_model('Loan')
     def index(self):
+
         
        
+
+
+
         return self.load_view('index.html')
 
     def new_user(self):
@@ -18,12 +25,16 @@ class Loans(Controller):
 
         for x in request.form['reg_phone']:
             phone_number.append(x)
-        
+
         phone_number.pop(0)
         phone_number.pop(3)
         phone_number.pop(6)
         phone_number = ''.join(phone_number)
+
         
+
+
+
 
 
 
@@ -47,7 +58,7 @@ class Loans(Controller):
             phone_txt = "+1" + phone_number
             print phone_txt
 
-            message = client.messages.create(body="Welcome Loan Share, " + new_user['first_name'] +"!",
+            message = client.messages.create(body="Welcome to Loan Share, " + new_user['first_name'] +"!",
                 to= phone_txt,    # Replace with your phone number
                 from_="+12173546021") # Replace with your Twilio number
             print message.sid
@@ -64,7 +75,7 @@ class Loans(Controller):
         }
 
         validate = self.models['Loan'].validate_login(user_info)
-        print validate 
+        print validate
         if validate['status']:
             session['id'] = validate['user'][0]['id']
             return redirect('/users/dashboard')
@@ -88,9 +99,12 @@ class Loans(Controller):
         return redirect('/')
 
 
+
     def show_loan(self,id):
         return self.load_view("show.html")
 
+    def home(self):
+        return self.load_view("home.html")
 
 
 
@@ -102,6 +116,25 @@ class Loans(Controller):
 
 
 
+    def new_loan(self):
+        return self.load_view('loan_new.html')
 
 
+    def create_loan(self):
+        passed_info = {
+        'title' : request.form['name_loan'],
+        'amount':request.form['amount_loan'],
+        'interest': request.form['interest_loan'],
+        'start': request.form['start'],
+        'end': request.form['end'],
+        'to_email': request.form['person_to_email'],
+        'user_id': session['id']
+        }
+        print "GOING INTO MODEL NEW LOAN METHOD"
+        self.models['Loan'].new_loan(passed_info)
+        print "WE GOT PAST NEW LOAN METHOD"
+        return redirect('/users/dashboard')
 
+
+    def show_loan(self,id):
+        return self.load_view("show.html")
