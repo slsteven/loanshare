@@ -20,10 +20,6 @@ class Loans(Controller):
         phone_number.pop(6)
         phone_number = ''.join(phone_number)
       
-
-
-
-
         new_user={
             "first_name":request.form['reg_first'],
             "last_name":request.form['reg_last'],
@@ -50,7 +46,7 @@ class Loans(Controller):
         }
 
         validate = self.models['Loan'].validate_login(user_info)
-        print validate 
+    
         if validate['status']:
             session['id'] = validate['user'][0]['id']
             return redirect('/users/dashboard')
@@ -64,8 +60,13 @@ class Loans(Controller):
             return redirect('/')
 
         user_info = self.models['Loan'].get_user_info(session['id'])
-        # if user_info[0].account_type == "2":
-        #     self.models['Loan'].get_borrower_loans(session['id'])
+        
+        self.models['Loan'].get_loans(session['id'])
+
+        # if user_info[0].account_type == "1":
+        #     pass
+        # elif user_info[0].account_type == "2":
+        #     pass
         return self.load_view("dashboard.html")
 
     def logout(self):
