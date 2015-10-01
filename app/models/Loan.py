@@ -76,6 +76,10 @@ class Loan(Model):
             self.db.query_db("INSERT INTO user_loans (loan_ID , borrower_ID , lender_ID) VALUES('{}','{}','{}')".format(info_of_loan[0]['id'],passed_info['user_id'],info_of_lender[0]['id']))
             print "IF WE GOT HERE THEN WE INSERT AND SELECTED ALL MYSQL QUERIES SUCCESFULLY"
         return
+    def accept_loan(self, loan_id):
+        query ="UPDATE `hackathon`.`loans` SET `status`='1' WHERE `id`='{}';".format(loan_id)
+        return self.db.query_db(query)
+
 
     def get_user_info(self,id):
         return self.db.query_db("SELECT * FROM users WHERE id = {}".format(id))
@@ -88,7 +92,7 @@ class Loan(Model):
 
     def lender_table_info(self,id):
         # Grabs table information
-        return self.db.query_db("SELECT loans.id,loans.title,loans.amount,loans.interest,loans.term,loans.start,loans.status,loans.created_at,ledgers.balance, user_loans.borrower_id, user_loans.lender_id  FROM hackathon.loans LEFT JOIN user_loans ON loans.id = user_loans.loan_id LEFT JOIN ledgers on loans.id = ledgers.loan_id WHERE user_loans.lender_id = {}".format(id))
+        return self.db.query_db("SELECT loans.id,loans.title,loans.amount,loans.intrest,loans.term,loans.start,loans.status,loans.created_at,ledgers.balance, user_loans.borrower_id, user_loans.lender_id  FROM hackathon.loans LEFT JOIN user_loans ON loans.id = user_loans.loan_id LEFT JOIN ledgers on loans.id = ledgers.loan_id WHERE user_loans.lender_id = {}".format(id))
 
     def borrower_table_info(self,id):
         # Grabs table information
@@ -97,7 +101,3 @@ class Loan(Model):
 
     def get_loan_info(self,id):
         return self.db.query_db("SELECT * FROM loans WHERE loans.id = {}".format(id))
-
-
-
-

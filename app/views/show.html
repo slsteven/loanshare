@@ -15,7 +15,7 @@
 		});
     </script>
     <style type='text/css'>
-	
+
     </style>
 </head>
 <body>
@@ -35,8 +35,8 @@
                 <p>Interest Rate:{{loan['interest']}}</p>
                 <p>Loan Term: {{loan['term']}}</p>
                 <p>Lender Name: {{lender['first']}} {{lender['last']}}</p>
-                <form action="">
-                    
+                <form action="/accept/{{loan['id']}}" method='POST'>
+									<input type="submit" value ="accept loan">
                 </form>
             {%endif%}
 			</div>
