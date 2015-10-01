@@ -99,5 +99,37 @@ class Loan(Model):
         return self.db.query_db("SELECT * FROM loans WHERE loans.id = {}".format(id))
 
 
+    def ledger(self, loan):
+        query = "SELECT ledgers.id,ledgers.change, ledgers.balance,ledgers.comment,ledgers.created_at FROM ledgers LEFT JOIN loans ON ledgers.loan_id = loans.id WHERE loans.id = {}".format(loan[0]['id'])
+        if loan[0]['status'] == "2":
+            return {'status':True, 'ledger':self.db.query_db(query)}
+        else:
+            return {'status': False}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

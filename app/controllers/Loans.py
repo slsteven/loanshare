@@ -82,6 +82,7 @@ class Loans(Controller):
             return redirect('/')
         user_info = self.models['Loan'].get_user_info(session['id'])
 
+
         #check if user is a lender or borrower and renders information accordingly
         if user_info[0]['account_type'] == "1":
             loan_info = self.models['Loan'].lender_table_info(session['id'])
@@ -89,6 +90,11 @@ class Loans(Controller):
         elif user_info[0]['account_type'] == "2":
             loan_info = self.models['Loan'].borrower_table_info(session['id'])
             session['account_type'] = "Borrower"
+
+        active_loan = self.models['Loan'].ledger(loan_info)
+        print active_loan
+        if active_loan['status']:
+            return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],ledger=active_loan['ledger'])
         return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0])
 
     def logout(self):
@@ -132,4 +138,7 @@ class Loans(Controller):
         self.models['Loan'].new_loan(passed_info)
         print "WE GOT PAST NEW LOAN METHOD"
         return redirect('/users/dashboard')
+
+
+
 

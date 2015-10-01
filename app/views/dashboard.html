@@ -59,6 +59,29 @@
                     {%endfor%}
                     </tbody>            
                 </table>
+                <div id='ledger'>
+                    <h2>Balance</h2>
+                    <table class='col-md-6'>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Change</th>
+                                <th>Description</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for data in ledger%}
+                                <tr>
+                                    <td>{{data['created_at']}}</td>
+                                    <td>{{data['change']}}</td>
+                                    <td>{{data['comment']}}</td>
+                                    <td>{{data['balance']}}</td>
+                                </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
 			</div>
 
     </div>
