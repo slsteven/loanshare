@@ -28,11 +28,22 @@ class Loans(Controller):
         return self.load_view('index.html')
 
     def new_user(self):
+        phone_number = []
+
+        for x in request.form['reg_phone']:
+            phone_number.append(x)
+        
+        phone_number.pop(0)
+        phone_number.pop(3)
+        phone_number.pop(6)
+        phone_number = ''.join(phone_number)
+      
+
         new_user={
             "first_name":request.form['reg_first'],
             "last_name":request.form['reg_last'],
             "email":request.form['reg_email'],
-            "phone":request.form['reg_phone'],
+            "phone":phone_number,
             "acct_type":request.form['acct_type'],
             "password":request.form['reg_pw'],
             "password_confirm":request.form['reg_pw_confirm']

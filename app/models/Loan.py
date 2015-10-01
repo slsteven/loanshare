@@ -63,4 +63,7 @@ class Loan(Model):
         self.db.query_db("INSERT INTO `loans` (`title`, `amount`,`interest`,`term`,`start`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}',NOW(),NOW())".format(passed_info['title'],passed_info['amount'],passed_info['interest'],passed_info['end'],passed_info['start']))
         user_query = "SELECT * FROM users WHERE email = '{}' LIMIT 1".format(passed_info['person_to_email'])
         validate = self.db.query_db(user_query)
-        if validate:
+        if validate == []:
+            pass
+        elif:
+            pass 
