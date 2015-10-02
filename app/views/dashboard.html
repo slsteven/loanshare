@@ -22,14 +22,14 @@
 	<div class="jumbotron">
     	<div class="container">
     		<div class="well col-md-12">
-                <h2>Dashboard</h2>
-                <button><a href="/">Home</a></button>
+                <h2>Welcome {{user['first']}} {{user['last']}}! You are a {{session['account_type']}}</h2>
+                <button><a href="/users/dashboard">Home</a></button>
                 <!-- <button><a href="">Profile</a></button> -->
-                <button><a href="/logout">Logout</a></button>
+                <button><a href="/users/logout">Logout</a></button>
 			</div>
 			<div class='col-md-12'>
                 
-				<table id="dashboard" class='col-md-12' >
+				<table id="dashboard" class='col-md-12 table-striped table-bordered table-hover' >
                     <h2>Loan Offers</h2>
                     <thead>
                         <tr>
@@ -45,11 +45,52 @@
                     </thead>
                     <tbody>
                     <!-- Here we will have a for loop to generate table data -->
+                    {%for loan in loan_info%}
                         <tr>
-                            <td></td>
+                            <td><a href="/users/loan/{{loan['id']}}">{{loan['title']}}</a></td>
+                            <td>${{loan['amount']}}</td>
+                            <td>{{loan['interest']}}%</td>
+                            <td>{{loan['term']}}</td>
+                            <td>{{loan['start']}}</td>
+                            <td>{{loan['balance']}}</td>
+                            <td>{{loan['status']}}</td>
+                            {%if loan['status'] == '3'%}
+                            <td>
+                                <button><a href="">Make a Payment</a></button>
+                            </td>
+                            {%else%}
+                            <td>
+                                <button><a href="/users/{{loan['id']}}/adjust">Adjust</a></button>
+                                <button><a href="/users/{{loan['id']}}/accept">Accept</a></button>
+                            </td>
+                            {%endif%}         
                         </tr>
+                    {%endfor%}
                     </tbody>            
                 </table>
+                <div id='ledger'>
+                    <h2>Balance</h2>
+                    <table class='col-md-6'>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Change</th>
+                                <th>Description</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for data in ledger%}
+                                <tr>
+                                    <td>{{data['created_at']}}</td>
+                                    <td>{{data['change']}}</td>
+                                    <td>{{data['comment']}}</td>
+                                    <td>{{data['balance']}}</td>
+                                </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
 			</div>
 
     </div>
