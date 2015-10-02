@@ -40,7 +40,7 @@
                             <th>Start Date</th>
                             <th>Balance</th>
                             <th>Status</th>
-                            <th></th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,7 +54,16 @@
                             <td>{{loan['start']}}</td>
                             <td>{{loan['balance']}}</td>
                             <td>{{loan['status']}}</td>
-                            <td><button><a href="/users/loan/{{loan['id']}}">View Loan</a></button></td>         
+                            {%if loan['status'] == '3'%}
+                            <td>
+                                <button><a href="">Make a Payment</a></button>
+                            </td>
+                            {%else%}
+                            <td>
+                                <button><a href="/users/{{loan['id']}}/adjust">Adjust</a></button>
+                                <button><a href="/users/{{loan['id']}}/accept">Accept</a></button>
+                            </td>
+                            {%endif%}         
                         </tr>
                     {%endfor%}
                     </tbody>            

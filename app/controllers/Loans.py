@@ -120,15 +120,13 @@ class Loans(Controller):
         #check if user is a lender or borrower and renders information accordingly
         if user_info[0]['account_type'] == "1":
             loan_info = self.models['Loan'].lender_table_info(session['id'])
-            print loan_info
-            print "inif"
+     
             session['account_type'] = "Lender"
 
 
         elif user_info[0]['account_type'] == "2":
             loan_info = self.models['Loan'].borrower_table_info(session['id'])
-            print loan_info
-            print "inelif"
+
             session['account_type'] = "Borrower"
 
 
@@ -172,14 +170,12 @@ class Loans(Controller):
         self.models['Loan'].accept_loan(id)
         return redirect ("/users/dashboard")
 
-    def counter_offer(self,oldinfo):
-        old_loan_info = self.models['Loan'].get_loan_info(oldinfo)
-        borrower_email = self.models['Loan'].get_borrower_email(oldinfo)
-        #self.models['Loan'].counter(old_loan_info)
-        return self.load_view("counter.html", oldinfo = old_loan_info, oldemail = borrower_email)
 
     def new_loan(self):
-        return self.load_view('loan_new.html')
+        if 'old_info' in session:
+            return self.load_view('load_new.html', info = session['old_info'][0])
+        else:
+            return self.load_view('loan_new.html')
 
 
     def create_loan(self):
@@ -199,4 +195,30 @@ class Loans(Controller):
         else:
             flash(validate['message'])
             return redirect("/users/get_loan")
+
+    def accept_loan(self,loan_id):
+        self.models['Loan'].accept_loan(loan_id)
+        flash("Congratualations! You've accepted your loan")
+        return redirect('/users/dashboard')
+
+    def adjust_loan(self,loan_id):
+        self.models['Loan'].adjust_loan(loan_id)
+        loan_info = self.models['Loan'].get_loan_info(loan_id)
+        email_to_grab = self.models['Loan'].get_borrower_email(loan_id)
+        print loan_info
+        if session['account_type'] == "Lender":
+            email_for_form = email_to_grab[0]['borrowers_email']
+        elif session['account_type'] == "Borrower":
+            print "in elif"
+            email_for_form = email_to_grab[0]['lenders_email']
+
+        return self.load_view("counter.html", info = loan_info[0], email = email_for_form)
+
+    # def counter_offer(self,oldinfo):
+    #     old_loan_info = self.models['Loan'].get_loan_info(oldinfo)
+    #     borrower_email = self.models['Loan'].get_borrower_email(oldinfo)
+    #     #self.models['Loan'].counter(old_loan_info)
+    #     return self.load_view("counter.html", oldinfo = old_loan_info, oldemail = borrower_email)
+
+
 
