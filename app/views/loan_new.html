@@ -22,8 +22,8 @@
     <form action="/users/loan_form" method="post">
       <label for="name_loan">Name of Loan: </label>
       <input type="text" name='name_loan' id='name_loan' class="form-control" placeholder="">
-      <label for="amount_loan">Amount Loaned: </label>
-      <input type="text" name='amount_loan' id='amount_loan' class="form-control" placeholder="">
+      <label for="amount_loan">Amount Loaned: $</label>
+      <input type="number" pattern="^\d+(\.|\,)\d{2}" name='amount_loan' id='amount_loan' class="form-control" placeholder="">
       <label for="interest_loan">Interest: </label>
       <input type="text" name='interest_loan' id='interest_loan' class="form-control" placeholder="">
       <label for="start_date">Starts: </label>
