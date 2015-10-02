@@ -80,10 +80,18 @@ class Loan(Model):
         query ="UPDATE `hackathon`.`loans` SET `status`='1' WHERE `id`='{}';".format(loan_id)
         return self.db.query_db(query)
 
+    def get_loan_info(self,id):
+        return self.db.query_db("SELECT * FROM loans WHERE loans.id = {}".format(id))
+
 
     def get_user_info(self,id):
         return self.db.query_db("SELECT * FROM users WHERE id = {}".format(id))
 
+    def counter(self,old_loan):
+        pass
+    def get_borrower_email(self,id):
+        query="SELECT users2.first AS borrower, users.first AS lender, users2.email AS borrowers_email FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE user_loans.loan_ID = '{}';".format(id)
+        return self.db.query_db(query)
     #Retrieves loans for borrowers
     def get_borrower_loans(self,id):
         query = "SELECT users.first AS borrower, users2.first AS lender FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE users.id = {}".format(id)

@@ -12,6 +12,7 @@ routes['GET']['/login'] = 'Loans#user_login'
 routes['GET']['/users/loan/<loan_id>'] = 'Loans#show_loan'
 routes['GET']['/home'] = 'Loans#home'
 routes['POST']['/accept/<id>'] = 'Loans#accepted_loan'
+routes['GET']['/counteroffer/<oldinfo>'] = 'Loans#counter_offer'
 
 
 

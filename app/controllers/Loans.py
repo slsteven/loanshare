@@ -127,6 +127,12 @@ class Loans(Controller):
         self.models['Loan'].accept_loan(id)
         return redirect ("/users/dashboard")
 
+    def counter_offer(self,oldinfo):
+        old_loan_info = self.models['Loan'].get_loan_info(oldinfo)
+        borrower_email = self.models['Loan'].get_borrower_email(oldinfo)
+        #self.models['Loan'].counter(old_loan_info)
+        return self.load_view("counter.html", oldinfo = old_loan_info, oldemail = borrower_email)
+
     def new_loan(self):
         return self.load_view('loan_new.html')
 
