@@ -118,23 +118,31 @@ class Loans(Controller):
         user_info = self.models['Loan'].get_user_info(session['id'])
 
         #check if user is a lender or borrower and renders information accordingly
-        if user_info[0]['account_type'] == 1:
-
+        if user_info[0]['account_type'] == "1":
             loan_info = self.models['Loan'].lender_table_info(session['id'])
+            print loan_info
+            print "inif"
             session['account_type'] = "Lender"
+
+
         elif user_info[0]['account_type'] == "2":
             loan_info = self.models['Loan'].borrower_table_info(session['id'])
+            print loan_info
+            print "inelif"
             session['account_type'] = "Borrower"
 
 
-        active_loan = self.models['Loan'].ledger(loan_info)
-        print active_loan
-        if active_loan['status']:
-            return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],ledger=active_loan['ledger'])
-
-        print loan_info
-
-        return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0])
+        #Checks if user already has loans
+        check = self.models['Loan'].loan_check(session['id'],session['account_type'])
+        
+        if check:
+            active_loan = self.models['Loan'].ledger(loan_info)
+            if active_loan['status']:
+                return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],ledger=active_loan['ledger'])
+            else:
+                return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0])
+        else:
+            return self.load_view("dashboard.html",user=user_info[0])
 
 
     def logout(self):
@@ -145,22 +153,17 @@ class Loans(Controller):
     def show_loan(self,loan_id):
         loan_info = self.models['Loan'].get_loan_info(loan_id)
         user_info = self.models['Loan'].get_user_info(session['id'])
-        print "________"
-        print "we are getting in here?"
-        print "________"
+
 
         # return self.load_view("show.html")
-        if user_info[0]['account_type'] == 1:
+        if user_info[0]['account_type'] == "1":
             #user is a lender
-            print "________"
-            print "we are getting in here inside the user_info[0]['account_type']?"
-            print "________"
             return self.load_view("show.html",loan=loan_info[0],user=user_info[0], lender = True)
         elif user_info[0]['account_type'] == "2":
             #user is a borrower
             lender_query = self.models['Loan'].borrower_table_info(session['id'])
             lender_info = self.models['Loan'].get_user_info(lender_query[0]['lender_id'])
-            print lender_info
+
             return self.load_view("show.html",loan=loan_info[0],user=user_info[0],lender=lender_info[0])
 
 
@@ -184,13 +187,16 @@ class Loans(Controller):
         'title' : request.form['name_loan'],
         'amount':request.form['amount_loan'],
         'interest': request.form['interest_loan'],
+        'term': request.form['term'],
         'start': request.form['start'],
-        'end': request.form['end'],
         'to_email': request.form['person_to_email'],
         'user_id': session['id']
         }
-        print "GOING INTO MODEL NEW LOAN METHOD"
-        self.models['Loan'].new_loan(passed_info)
-        print "WE GOT PAST NEW LOAN METHOD"
-        return redirect('/users/dashboard')
+        
+        validate = self.models['Loan'].new_loan(session['id'],passed_info)
+        if validate:
+            return redirect('/users/dashboard')
+        else:
+            flash(validate['message'])
+            return redirect("/users/get_loan")
 
