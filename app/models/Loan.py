@@ -143,12 +143,31 @@ class Loan(Model):
         print "above is insertion"
         self.db.query_db(insertion)
         return
+
     def ledger(self, loan):
-        query = "SELECT ledgers.id,ledgers.change, ledgers.balance,ledgers.comment,ledgers.created_at FROM ledgers LEFT JOIN loans ON ledgers.loan_id = loans.id WHERE loans.id = {}".format(loan[0]['id'])
-        if loan[0]['status'] == "2":
-            return {'status':True, 'ledger':self.db.query_db(query)}
+        print loan['id']
+        print "above should be 2"
+        query = "SELECT ledgers.id, ledgers.balance,ledgers.comment,ledgers.created_at FROM ledgers LEFT JOIN loans ON ledgers.loan_id = loans.id WHERE loans.id = {}".format(loan['id'])
+        if loan['status'] == "3":
+            loan_query =self.db.query_db(query)
+            print loan_query
+            print "___"
+            return {'status':True, 'ledger':loan_query}
         else:
             return {'status': False}
+
+    def update_ledger(self, loan_id,person_amount):
+        grab_current_amount = "SELECT ledgers.balance FROM ledgers WHERE loan_id = '{}'".format(loan_id)
+        current = self.db.query_db(grab_current_amount)
+        print current
+        print person_amount
+
+        new_balance = current[0]['balance']-int(person_amount)
+
+        print new_balance
+        insertion = "UPDATE ledgers SET balance = '{}' WHERE loan_id = '{}'".format(new_balance,loan_id)
+        self.db.query_db(insertion)
+        return
 
 
     def loan_check(self,id,acct_type):

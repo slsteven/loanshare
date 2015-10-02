@@ -143,12 +143,36 @@ class Loans(Controller):
         check = self.models['Loan'].loan_check(session['id'],session['account_type'])
 
         if check:
-            active_loan = self.models['Loan'].ledger(loan_info)
+            print "~~~~~~VVV"
+            print loan_info
+            print "~~~~~^^^"
+            all_loans =[]
+            for x in range(len(loan_info)):
+                print "im looping too"
+                active_loan = self.models['Loan'].ledger(loan_info[x])
+                all_loans.append(active_loan['ledger'])
+
+            '''active_loan = self.models['Loan'].ledger(loan_info)
+            print active_loan['status']
+            print active_loan
+            print loan_info'''
+
+            #all_loans =[]
+            '''for i in range(len(active_loan)):
+                print "im looping"
+                all_loans.append(active_loan['ledger'])'''
+            print all_loans
+            print "above should be all loans"
+
+
             if active_loan['status']:
-                return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],ledger=active_loan['ledger'])
+                print "inside check if statment"
+                return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],ledger=all_loans)
             else:
+                print "inside check else statment"
                 return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0])
         else:
+            print "outside both statments"
             return self.load_view("dashboard.html",user=user_info[0])
 
 
@@ -228,7 +252,9 @@ class Loans(Controller):
         return self.load_view("counter.html", info = loan_info[0], email = email_for_form)
 
 
-    def payment_amount(self):
+    def payment_amount(self, id):
+        #set session to grab the id of teh loan we're paying
+        session['loan_id_payment'] = id
 
         return self.load_view('payment_amount.html')
 
@@ -257,6 +283,8 @@ class Loans(Controller):
             currency='usd',
             description='Loan Payment'
         )
+        #while payment is processing update ledger
+        self.models['Loan'].update_ledger(session['loan_id_payment'],amount)
 
         return self.load_view('charge.html', amount= amount)
 

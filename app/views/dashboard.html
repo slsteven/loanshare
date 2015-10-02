@@ -56,7 +56,7 @@
                             <td>{{loan['status']}}</td>
                             {%if loan['status'] == '3'%}
                             <td>
-                                <button><a href="/loan_payment">Make a Payment</a></button>
+                                <button><a href="/loan_payment/{{loan['id']}}">Make a Payment</a></button>
                             </td>
                             {%else%}
                             <td>
@@ -81,12 +81,14 @@
                         </thead>
                         <tbody>
                             {%for data in ledger%}
+															{%for datum in data%}
                                 <tr>
-                                    <td>{{data['created_at']}}</td>
-                                    <td>{{data['change']}}</td>
-                                    <td>{{data['comment']}}</td>
-                                    <td>{{data['balance']}}</td>
+                                    <td>{{datum['created_at']}}</td>
+                                    <td>{{datum['change']}}</td>
+                                    <td>{{datum['comment']}}</td>
+                                    <td>{{datum['balance']}}</td>
                                 </tr>
+																{%endfor%}
                             {%endfor%}
                         </tbody>
                     </table>

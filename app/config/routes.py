@@ -18,7 +18,7 @@ routes['GET']['/users/<loan_id>/accept'] = 'Loans#accept_loan'
 routes['GET']['/users/add_ledger'] = 'Loans#new_ledger'
 
 
-routes['/loan_payment'] = 'Loans#payment_amount'
+routes['/loan_payment/<id>'] = 'Loans#payment_amount'
 routes['POST']['/payment'] ='Loans#payment'
 routes['POST']['/charge'] = 'Loans#stripe_charge'
 
