@@ -66,7 +66,7 @@ class Loan(Model):
         else:
             print "IF WE GOT HERE THEN WE FOUND THE EMAIL OF THE PERSON WE WANT TO SEND THE LOAN OFFER TO"
             # inserting into loans table all of the user passed information
-            self.db.query_db("INSERT INTO `loans` (`title`, `amount`,`intrest`,`term`,`start`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}',NOW(),NOW())".format(passed_info['title'],passed_info['amount'],passed_info['interest'],passed_info['end'],passed_info['start']))
+            self.db.query_db("INSERT INTO `loans` (`title`, `amount`,`interest`,`term`,`start`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}',NOW(),NOW())".format(passed_info['title'],passed_info['amount'],passed_info['interest'],passed_info['end'],passed_info['start']))
             # creating a var that gathers all the info of the potential lender by querying the db for the user inserted email
             info_of_lender = self.db.query_db("SELECT users.id, users.first, users.last FROM users WHERE email = '{}'".format(validate[0]['email']))
             #By gathering the title of the newly inserted loan we can grab the loan id and any other piece of info thats nessecery
