@@ -62,50 +62,6 @@
     <div class="col-sm-offset-2 col-md-8">
       <h3>Fill out your own loan terms for potential lenders!</h3>
       <form action="/users/loan_form" method="post">
-        <label for="name_loan">Put a quick sentence why you need the money.</label>
-        <input type="text" name='name_loan' id='name_loan' class="form-control" placeholder="">
-      
-
-        <label for="amount_loan">How much are you looking for? </label>
-        <input type="number" pattern="^\d+(\.|\,)\d{2}" name='amount_loan' id='amount_loan' class="form-control" placeholder="">
-
-        <label for="interest_loan">Propose any interest amount. </label>
-        <input type="text" name='interest_loan' id='interest_loan' class="form-control" placeholder="">
-
-        
-        <label for="person_to_email">Email loan to friends and family: </label>
-        <input type="text" name='person_to_email' id='email_person' class="form-control" placeholder="">
-
-        <label for="start_date">Starts: </label>
-        <p>Date of first payment: <input type="date" name="start" class="datepicker"></p>
-
-        <label for="end_date">Ends: </label>
-        <p>Date of last payment: <input type="date" name="end" class="datepicker"></p>
-
-        <input type="submit" value="Send Loan to be processed" class="btn btn-success">
-    </form>
-    </div>
-  </div>
-
-</div>
-=======
-  <title>Document</title>
-  <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-<!-- Latest compiled and minified JavaScript -->
-<!-- // <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-
-</head>
-
-<body>
-
-  <h1>Loan</h1>
-     
-
-      <form action="/users/loan_form" method="post">
         <label for="name_loan">Name of Loan: </label>
         <input type="text" name='name_loan' id='name_loan' class="form-control" placeholder="">
         <label for="amount_loan">Amount Loaned: </label>
@@ -131,13 +87,8 @@
         <input type="text" name='person_to_email' id='email_person' class="form-control" placeholder="">
         <input type="submit" value="Send Loan to be processed" class="btn btn-success">
       </form>
-      {%with messages=get_flashed_messages()%}
-        {%if messages%}
-          {%for message in messages%}
-            <p>{{message}}</p>
-          {%endfor%}
-        {%endif%}
-      {%endwith%}
-
+    </div>
+  </div>
+</div>
 </body>
 </html>
