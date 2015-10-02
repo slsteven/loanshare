@@ -128,17 +128,18 @@ class Loans(Controller):
 
             session['account_type'] = "Borrower"
 
-        lender_borrower_info = self.models['Loan'].get_borrower_email(loan_info[0]['id'])
-        lender_name = lender_borrower_info[0]['lender']
-        print lender_borrower_info
         #Checks if user already has loans
         check = self.models['Loan'].loan_check(session['id'],session['account_type'])
         
         if check:
             active_loan = self.models['Loan'].ledger(loan_info)
             if active_loan['status']:
+                lender_borrower_info = self.models['Loan'].get_borrower_email(loan_info[0]['id'])
+                lender_name = lender_borrower_info[0]['lender']
                 return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],ledger=active_loan['ledger'],lender_name=lender_name)
             else:
+                lender_borrower_info = self.models['Loan'].get_borrower_email(loan_info[0]['id'])
+                lender_name = lender_borrower_info[0]['lender']
                 return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],lender_name=lender_name)
         else:
             return self.load_view("dashboard.html",user=user_info[0])
