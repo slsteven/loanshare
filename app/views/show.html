@@ -28,20 +28,37 @@
                 <button><a href="/users/logout">Logout</a></button>
 			</div>
 			<div class='col-md-12'>
-            {%if lender%}
+            
                 <h2></h2>
                 <h3>Loan Name: {{loan['title']}}</h3>
                 <p>Amount: ${{loan['amount']}}</p>
                 <p>Interest Rate:{{loan['interest']}}</p>
                 <p>Loan Term: {{loan['term']}}</p>
+                {%if lender%}
                 <p>Lender Name: {{lender['first']}} {{lender['last']}}</p>
+
+                {%endif%}
+                
+                    
+
                 <form action="/accept/{{loan['id']}}" method='POST'>
-									<input type="submit" value ="accept loan">
+					<input type="submit" value ="accept loan">
                 </form>
-								<form action="/counteroffer/{{loan['id']}}" method='GET'>
-									<input type="submit" value ="counter_offer">
+				<form action="/counteroffer/{{loan['id']}}" method='GET'>
+					<input type="submit" value ="counter_offer">
+
                 </form>
-            {%endif%}
+                <div id='ledger'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Balance</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
 			</div>
 
     </div>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stripe</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script type="text/javascript"></script>
+
+ 
+  <style type="text/css" media="screen">
+    form article label {
+      display: block;
+      margin: 5px;
+    }
+
+    form .submit {
+      margin: 15px 0;
+    }
+  </style>
+</head>
+<body>
+  {% block content %}
+  <form action='/charge' method='post'>
+	
+  </form>
+  	<form action="/charge" method="post">
+  		
+    <article>
+      <label>
+        <span>Amount ${{amount}}</span>
+      </label>
+    </article>
+
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="{{ key }}"
+            data-description="Loan payment"
+            data-amount="{{stripe_amount}}"
+            data-locale="auto"></script>
+  </form>
+
+  {% endblock %}
+</body>
+</html>
