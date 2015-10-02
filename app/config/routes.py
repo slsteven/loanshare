@@ -19,6 +19,10 @@ routes['GET']['/users/<loan_id>/accept'] = 'Loans#accept_loan'
 routes['GET']['/admin_dash'] = 'Loans#admin_dash'
 routes['GET']['/index_json'] = 'Loans#index_json'
 
+routes['/loan_payment'] = 'Loans#payment_amount'
+routes['POST']['/payment'] ='Loans#payment'
+routes['POST']['/charge'] = 'Loans#stripe_charge'
+
 
 """
     routes['GET']['/users'] = 'users#index'

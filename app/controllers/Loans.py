@@ -1,12 +1,21 @@
 from system.core.controller import *
 import twilio
 import smtplib
-
-
 from twilio.rest import TwilioRestClient
+import stripe
+
+
 account_sid = "AC5557801c4252c083b249d35b5fbef374"
 auth_token  = "3ee0d202fb03d4d0b341be99c1c19312"
 client = TwilioRestClient(account_sid, auth_token)
+
+
+stripe_keys = {
+    'secret_key': 'sk_test_sc9RnM4XiX9WSA2h69xBLiVg',
+    'publishable_key': 'pk_test_5SFr7NbHCysVPHvRuZn8lXrp'
+}
+
+stripe.api_key = stripe_keys['secret_key']
 
 
 
@@ -49,7 +58,7 @@ class Loans(Controller):
             phone_txt = "+1" + phone_number
             print phone_txt
 
-            message = client.messages.create(body="Welcome to Loan Share, " + new_user['first_name'] +"!",
+            message = client.messages.create(body="Welcome to BORROW, " + new_user['first_name'] +"!",
                 to= phone_txt,    # Replace with your phone number
                 from_="+12173546021") # Replace with your Twilio number
             print message.sid
@@ -57,7 +66,7 @@ class Loans(Controller):
 
             TO = new_user['email']
             SUBJECT = 'WELCOME'
-            TEXT ='Welcome to LOAN SHARE, ' + new_user['first_name'] + "!"
+            TEXT ='Welcome to BORROW, ' + new_user['first_name'] + "!"
 
             gmail_sender   = 'loanshare.dojo@gmail.com'
             gmail_passwd = 'Codingdojo1!'
@@ -232,6 +241,39 @@ class Loans(Controller):
             email_for_form = email_to_grab[0]['lenders_email']
 
         return self.load_view("counter.html", info = loan_info[0], email = email_for_form)
+
+    def payment_amount(self):
+
+        return self.load_view('payment_amount.html')
+
+    def payment(self):
+
+        amount = request.form['payment']
+        session['amount'] = amount
+
+        session['stripe_amount'] = int(amount) * 100
+
+     
+        return self.load_view('payment.html',key=stripe_keys['publishable_key'], amount = amount, stripe_amount = session['stripe_amount'])
+
+    def stripe_charge(self):
+
+        amount = session['amount']
+
+        customer = stripe.Customer.create(
+            email='customer@example.com',
+            card=request.form['stripeToken']
+        )
+
+        charge = stripe.Charge.create(
+            customer=customer.id,
+            amount= session['stripe_amount'],
+            currency='usd',
+            description='Loan Payment'
+        )
+
+        return self.load_view('charge.html', amount= amount)
+
 
     # def counter_offer(self,oldinfo):
     #     old_loan_info = self.models['Loan'].get_loan_info(oldinfo)

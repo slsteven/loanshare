@@ -68,6 +68,8 @@ class Loan(Model):
             print "there is no user by that email"
             return {'status':False,'message':"Cannot find user"}
         else:
+
+
             new_loan_query = "INSERT INTO `hackathon`.`loans` (`title`, `amount`, `interest`, `term`, `start`, `status`,`created_at`,`updated_at`) VALUES ('{}','{}','{}','{}','{}','{}', NOW(),NOW())".format(loan['title'],loan['amount'],loan['interest'],loan['term'],loan['start'],"1")
             self.db.query_db(new_loan_query)
 
@@ -81,6 +83,7 @@ class Loan(Model):
                 print "in elif"
                 borrower_query = "INSERT INTO `hackathon`.`user_loans` (`borrower_id`,`lender_id`) VALUES ('{}', '{}')".format(user_id,validate[0]['id'])
                 self.db.query_db(borrower_query)
+
 
             print "IF WE GOT HERE THEN WE INSERT AND SELECTED ALL MYSQL QUERIES SUCCESFULLY"
             return {'status':True}
