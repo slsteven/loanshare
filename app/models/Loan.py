@@ -66,7 +66,7 @@ class Loan(Model):
         else:
             print "IF WE GOT HERE THEN WE FOUND THE EMAIL OF THE PERSON WE WANT TO SEND THE LOAN OFFER TO"
             # inserting into loans table all of the user passed information
-            self.db.query_db("INSERT INTO `loans` (`title`, `amount`,`intrest`,`term`,`start`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}',NOW(),NOW())".format(passed_info['title'],passed_info['amount'],passed_info['interest'],passed_info['end'],passed_info['start']))
+            self.db.query_db("INSERT INTO `loans` (`title`, `amount`,`interest`,`term`,`start`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}',NOW(),NOW())".format(passed_info['title'],passed_info['amount'],passed_info['interest'],passed_info['end'],passed_info['start']))
             # creating a var that gathers all the info of the potential lender by querying the db for the user inserted email
             info_of_lender = self.db.query_db("SELECT users.id, users.first, users.last FROM users WHERE email = '{}'".format(validate[0]['email']))
             #By gathering the title of the newly inserted loan we can grab the loan id and any other piece of info thats nessecery
@@ -93,9 +93,24 @@ class Loan(Model):
         query="SELECT users2.first AS borrower, users.first AS lender, users2.email AS borrowers_email FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE user_loans.loan_ID = '{}';".format(id)
         return self.db.query_db(query)
     #Retrieves loans for borrowers
+
+    def get_loans(self,id):
+        user_query = self.db.query_db("SELECT users.id AS borrow_id, users2.id AS lender_id, users.first AS borrower,  users2.first AS lender, users.email AS borrow_email, users2.email AS lender_email FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE users.id = {}".format(id))
+        print user_query
+
+        # loan_query = self.db.query_db("SELECT * FROM loans WHERE user_loans.lender_id = {} AND user_loans.borrower_id = {}".format(user_query[0]['lender'],user_query[0]['borrower']))
+
+        # print loan_query
+
+        #info being returned:
+        #[{'lender_email': None, 'borrow_email': 'chungkyd@gmail.com', 'lender': None, 'borrow_id': 1, 'borrower': 'Darrick', 'lender_id': None}]
+        return user_query
+
+
     def get_borrower_loans(self,id):
         query = "SELECT users.first AS borrower, users2.first AS lender FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE users.id = {}".format(id)
         return self.db.query_db(query)
+
 
 
     def lender_table_info(self,id):

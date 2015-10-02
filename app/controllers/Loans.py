@@ -27,7 +27,6 @@ class Loans(Controller):
         phone_number.pop(6)
         phone_number = ''.join(phone_number)
 
-
         new_user={
             "first_name":request.form['reg_first'],
             "last_name":request.form['reg_last'],
@@ -81,6 +80,7 @@ class Loans(Controller):
             flash("You must be logged in to view this page")
             return redirect('/')
         user_info = self.models['Loan'].get_user_info(session['id'])
+
         print "______"
         print user_info[0]['account_type']
         print "_____"
@@ -94,6 +94,7 @@ class Loans(Controller):
             session['account_type'] = "Borrower"
         print loan_info
         return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0])
+
 
     def logout(self):
         session.clear()
