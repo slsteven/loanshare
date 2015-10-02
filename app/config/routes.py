@@ -17,6 +17,10 @@ routes['GET']['/counteroffer/<oldinfo>'] = 'Loans#counter_offer'
 routes['GET']['/users/<loan_id>/accept'] = 'Loans#accept_loan'
 routes['GET']['/users/<loan_id>/adjust'] = 'Loans#adjust_loan'
 
+routes['/loan_payment'] = 'Loans#payment_amount'
+routes['POST']['/payment'] ='Loans#payment'
+routes['POST']['/charge'] = 'Loans#stripe_charge'
+
 
 """
     routes['GET']['/users'] = 'users#index'
