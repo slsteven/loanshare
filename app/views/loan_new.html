@@ -12,10 +12,11 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
 </head>
-<body> 
 
-  <h1>Loan</h1>
-     
+<body>
+    <h1>Loan</h1>
+
+
       <form action="/users/loan_form" method="post">
         <label for="name_loan">Name of Loan: </label>
         <input type="text" name='name_loan' id='name_loan' class="form-control" placeholder="">
@@ -36,7 +37,7 @@
           <option value="30">30 Months</option>
           <option value="36">36 Months</option>
         </select>
-      
+
         <p>Start: <input type="date" name="start" class="datepicker"></p>
         <label for="person_to_email">Email loan to: </label>
         <input type="text" name='person_to_email' id='email_person' class="form-control" placeholder="">
@@ -49,7 +50,7 @@
           {%endfor%}
         {%endif%}
       {%endwith%}
-    
+
 
 </body>
 </html>

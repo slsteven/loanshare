@@ -12,10 +12,11 @@ routes['GET']['/login'] = 'Loans#user_login'
 routes['GET']['/users/loan/<loan_id>'] = 'Loans#show_loan'
 routes['GET']['/home'] = 'Loans#home'
 routes['POST']['/accept/<id>'] = 'Loans#accepted_loan'
-routes['GET']['/counteroffer/<oldinfo>'] = 'Loans#counter_offer'
 
-routes['GET']['/users/<loan_id>/accept'] = 'Loans#accept_loan'
 routes['GET']['/users/<loan_id>/adjust'] = 'Loans#adjust_loan'
+routes['GET']['/users/<loan_id>/accept'] = 'Loans#accept_loan'
+routes['GET']['/users/add_ledger'] = 'Loans#new_ledger'
+
 
 routes['/loan_payment'] = 'Loans#payment_amount'
 routes['POST']['/payment'] ='Loans#payment'
