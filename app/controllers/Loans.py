@@ -1,5 +1,7 @@
 from system.core.controller import *
 import twilio
+import smtplib
+
 
 from twilio.rest import TwilioRestClient
 account_sid = "AC5557801c4252c083b249d35b5fbef374"
@@ -7,12 +9,13 @@ auth_token  = "3ee0d202fb03d4d0b341be99c1c19312"
 client = TwilioRestClient(account_sid, auth_token)
 
 
+
 class Loans(Controller):
     def __init__(self, action):
         super(Loans, self).__init__(action)
         self.load_model('Loan')
     def index(self):
-
+        # return self.load_view('index.html')
         return self.load_view('home.html')
 
 
@@ -26,7 +29,6 @@ class Loans(Controller):
         phone_number.pop(3)
         phone_number.pop(6)
         phone_number = ''.join(phone_number)
-
 
         new_user={
             "first_name":request.form['reg_first'],
@@ -47,11 +49,44 @@ class Loans(Controller):
             phone_txt = "+1" + phone_number
             print phone_txt
 
-            message = client.messages.create(body="Welcome Loan Share, " + new_user['first_name'] +"!",
+            message = client.messages.create(body="Welcome to Loan Share, " + new_user['first_name'] +"!",
                 to= phone_txt,    # Replace with your phone number
                 from_="+12173546021") # Replace with your Twilio number
             print message.sid
-            
+
+
+            TO = new_user['email']
+            SUBJECT = 'WELCOME'
+            TEXT ='Welcome to LOAN SHARE, ' + new_user['first_name'] + "!"
+
+            gmail_sender   = 'loanshare.dojo@gmail.com'
+            gmail_passwd = 'Codingdojo1!'
+
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.ehlo()
+            server.starttls()
+            server.ehlo
+            server.login(gmail_sender,gmail_passwd)
+
+
+            BODY = '\r\n'.join([
+                "TO: %s" % TO,
+                'FROM: %s' % gmail_sender,
+                'SUBJECT: %s' % SUBJECT,
+                '',
+                TEXT
+                ])
+
+            try:
+                server.sendmail(gmail_sender,[TO], BODY)
+                print 'email sent'
+
+            except:
+                print 'error sending email'
+
+
+            server.quit()            
+
         else:
             for message in validate['errors']:
                 flash(message)
@@ -83,13 +118,24 @@ class Loans(Controller):
         user_info = self.models['Loan'].get_user_info(session['id'])
 
         #check if user is a lender or borrower and renders information accordingly
-        if user_info[0]['account_type'] == "1":
+        if user_info[0]['account_type'] == 1:
+
             loan_info = self.models['Loan'].lender_table_info(session['id'])
             session['account_type'] = "Lender"
         elif user_info[0]['account_type'] == "2":
             loan_info = self.models['Loan'].borrower_table_info(session['id'])
             session['account_type'] = "Borrower"
+
+
+        active_loan = self.models['Loan'].ledger(loan_info)
+        print active_loan
+        if active_loan['status']:
+            return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],ledger=active_loan['ledger'])
+
+        print loan_info
+
         return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0])
+
 
     def logout(self):
         session.clear()
@@ -99,11 +145,14 @@ class Loans(Controller):
     def show_loan(self,loan_id):
         loan_info = self.models['Loan'].get_loan_info(loan_id)
         user_info = self.models['Loan'].get_user_info(session['id'])
-        print loan_info
+
         # return self.load_view("show.html")
-        if user_info[0]['account_type'] == "1":
+        if user_info[0]['account_type'] == 1:
             #user is a lender
-            return self.load_view("show.html",loan=loan_info[0],user=user_info[0])
+            print "________"
+            print "we are getting in here inside the user_info[0]['account_type']?"
+            print "________"
+            return self.load_view("show.html",loan=loan_info[0],user=user_info[0], lender = True)
         elif user_info[0]['account_type'] == "2":
             #user is a borrower
             lender_query = self.models['Loan'].borrower_table_info(session['id'])
@@ -113,6 +162,15 @@ class Loans(Controller):
 
 
 
+    def accepted_loan(self,id):
+        self.models['Loan'].accept_loan(id)
+        return redirect ("/users/dashboard")
+
+    def counter_offer(self,oldinfo):
+        old_loan_info = self.models['Loan'].get_loan_info(oldinfo)
+        borrower_email = self.models['Loan'].get_borrower_email(oldinfo)
+        #self.models['Loan'].counter(old_loan_info)
+        return self.load_view("counter.html", oldinfo = old_loan_info, oldemail = borrower_email)
 
     def new_loan(self):
         return self.load_view('loan_new.html')
