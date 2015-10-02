@@ -15,6 +15,7 @@ routes['POST']['/accept/<id>'] = 'Loans#accepted_loan'
 
 routes['GET']['/users/<loan_id>/adjust'] = 'Loans#adjust_loan'
 routes['GET']['/users/<loan_id>/accept'] = 'Loans#accept_loan'
+routes['GET']['/users/add_ledger'] = 'Loans#new_ledger'
 
 
 

@@ -85,7 +85,7 @@ class Loans(Controller):
                 print 'error sending email'
 
 
-            server.quit()            
+            server.quit()
 
         else:
             for message in validate['errors']:
@@ -120,7 +120,7 @@ class Loans(Controller):
         #check if user is a lender or borrower and renders information accordingly
         if user_info[0]['account_type'] == "1":
             loan_info = self.models['Loan'].lender_table_info(session['id'])
-     
+
             session['account_type'] = "Lender"
 
 
@@ -132,7 +132,7 @@ class Loans(Controller):
 
         #Checks if user already has loans
         check = self.models['Loan'].loan_check(session['id'],session['account_type'])
-        
+
         if check:
             active_loan = self.models['Loan'].ledger(loan_info)
             if active_loan['status']:
@@ -188,7 +188,7 @@ class Loans(Controller):
         'to_email': request.form['person_to_email'],
         'user_id': session['id']
         }
-        
+
         validate = self.models['Loan'].new_loan(session['id'],passed_info)
         if validate:
             return redirect('/users/dashboard')
@@ -199,6 +199,10 @@ class Loans(Controller):
     def accept_loan(self,loan_id):
         self.models['Loan'].accept_loan(loan_id)
         flash("Congratualations! You've accepted your loan")
+        print "____"
+        print "going into add ledger"
+        print "___"
+        self.models['Loan'].add_ledger(loan_id)
         return redirect('/users/dashboard')
 
     def adjust_loan(self,loan_id):
@@ -214,11 +218,9 @@ class Loans(Controller):
 
         return self.load_view("counter.html", info = loan_info[0], email = email_for_form)
 
+
     # def counter_offer(self,oldinfo):
     #     old_loan_info = self.models['Loan'].get_loan_info(oldinfo)
     #     borrower_email = self.models['Loan'].get_borrower_email(oldinfo)
     #     #self.models['Loan'].counter(old_loan_info)
     #     return self.load_view("counter.html", oldinfo = old_loan_info, oldemail = borrower_email)
-
-
-

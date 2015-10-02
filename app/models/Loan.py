@@ -127,6 +127,19 @@ class Loan(Model):
 
 
 
+    def add_ledger(self,loan_id):
+        print "okay we;re inside add ledger"
+        info_to_ledger = "SELECT *, user_loans.borrower_id, user_loans.lender_id FROM loans LEFT JOIN user_loans on loans.id = user_loans.loan_id WHERE loans.id = '{}'".format(loan_id)
+        print info_to_ledger
+        print "above is info_to_ledger"
+        info_to_insert = self.db.query_db(info_to_ledger)
+        print info_to_insert
+        print "above is info_to_insert"
+        insertion = "INSERT INTO ledgers (loan_id, lender_id, borrower_id,balance,created_at,updated_at) VALUES('{}','{}','{}','{}',NOW(),NOW())".format(info_to_insert[0]["id"],info_to_insert[0]["lender_id"],info_to_insert[0]["borrower_id"],info_to_insert[0]["amount"])
+        print insertion
+        print "above is insertion"
+        self.db.query_db(insertion)
+        return
     def ledger(self, loan):
         query = "SELECT ledgers.id,ledgers.change, ledgers.balance,ledgers.comment,ledgers.created_at FROM ledgers LEFT JOIN loans ON ledgers.loan_id = loans.id WHERE loans.id = {}".format(loan[0]['id'])
         if loan[0]['status'] == "2":
@@ -141,14 +154,14 @@ class Loan(Model):
             check = self.db.query_db(query)
             if check == []:
                 return False
-            else: 
+            else:
                 return True
         elif acct_type == "Borrower":
             query = "SELECT loans.id AS loan_id from users left join user_loans on users.id = user_loans.lender_id left join loans on user_loans.loan_id = loans.id where user_loans.borrower_id = {}".format(id)
             check = self.db.query_db(query)
             if check == []:
                 return False
-            else: 
+            else:
                 return True
 
 
@@ -158,31 +171,3 @@ class Loan(Model):
     def adjust_loan(self,loan_id):
         ##SET status to 2 indicating loan adjustment
         return self.db.query_db("UPDATE `hackathon`.`loans` SET `status`='2' WHERE `id`='{}'".format(loan_id))
-
-       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
