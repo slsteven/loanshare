@@ -15,7 +15,7 @@
 		});
     </script>
     <style type='text/css'>
-	
+
     </style>
 </head>
 <body>
@@ -28,17 +28,37 @@
                 <button><a href="/users/logout">Logout</a></button>
 			</div>
 			<div class='col-md-12'>
-            {%if lender%}
+            
                 <h2></h2>
                 <h3>Loan Name: {{loan['title']}}</h3>
                 <p>Amount: ${{loan['amount']}}</p>
                 <p>Interest Rate:{{loan['interest']}}</p>
                 <p>Loan Term: {{loan['term']}}</p>
+                {%if lender%}
                 <p>Lender Name: {{lender['first']}} {{lender['last']}}</p>
-                <form action="">
+
+                {%endif%}
+                
                     
+
+                <form action="/accept/{{loan['id']}}" method='POST'>
+					<input type="submit" value ="accept loan">
                 </form>
-            {%endif%}
+				<form action="/counteroffer/{{loan['id']}}" method='GET'>
+					<input type="submit" value ="counter_offer">
+
+                </form>
+                <div id='ledger'>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Balance</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
 			</div>
 
     </div>
