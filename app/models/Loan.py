@@ -98,6 +98,8 @@ class Loan(Model):
     def get_loan_info(self,id):
         return self.db.query_db("SELECT * FROM loans WHERE loans.id = {}".format(id))
 
-
+    def get_all_loans(self):
+        query = "SELECT * FROM loans"
+        return self.db.query_db(query)
 
 

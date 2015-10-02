@@ -99,7 +99,7 @@ class Loans(Controller):
     def show_loan(self,loan_id):
         loan_info = self.models['Loan'].get_loan_info(loan_id)
         user_info = self.models['Loan'].get_user_info(session['id'])
-
+        print loan_info
         # return self.load_view("show.html")
         if user_info[0]['account_type'] == "1":
             #user is a lender
@@ -133,3 +133,20 @@ class Loans(Controller):
         print "WE GOT PAST NEW LOAN METHOD"
         return redirect('/users/dashboard')
 
+    def admin_dash(self):
+        if not 'id' in session:
+            flash("You must be logged in to view this page")
+            return redirect('/')
+        user_info = self.models['Loan'].get_user_info(session['id'])
+
+        if user_info[0]['account_type'] == "9":
+            loan_info = self.models['Loan'].lender_table_info(session['id'])
+            session['account_type'] = "Admin"
+
+        all_loans =self.models['Loan'].get_all_loans()
+
+        return self.load_view('admin_dash.html', all_loans=all_loans, user=user_info[0])
+
+    def index_json(self):
+        all_loans =self.models['Loan'].get_all_loans()
+        return jsonify(all_loans=all_loans)

@@ -3,6 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Posts</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">        
+    <link rel="stylesheet" href="/static/assets/bootstrap/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/static/assets/typicons/typicons.min.css"> -->
+    <link rel="stylesheet" href="/static/assets/css/animate.css">
+    <link rel="stylesheet" href="/static/assets/css/magnific-popup.css">
+	<link rel="stylesheet" href="/static/assets/css/form-elements.css">
+    <link rel="stylesheet" href="/static/assets/css/style.css">
 	  <!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<!-- Optional theme -->
@@ -19,18 +26,43 @@
     </style>
 </head>
 <body>
-	<div class="jumbotron">
-    	<div class="container">
-    		<div class="well col-md-12">
-                <h2>Welcome {{user['first']}} {{user['last']}}! You are a {{session['account_type']}}</h2>
-                <button><a href="/users/dashboard">Home</a></button>
-                <!-- <button><a href="">Profile</a></button> -->
-                <button><a href="/users/logout">Logout</a></button>
+		
+        <!-- Top content -->
+        <div class="top-content">
+        	
+        	<!-- Top menu -->
+			<nav class="navbar navbar-inverse navbar-no-bg" role="navigation" style="background-color:black">
+				<div class="container">
+					<div class="navbar-header" style="color:black">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<h2 style="color:white">LOAN SHARE</h2>
+					</div>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="top-navbar-1">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a class="scroll-link" href="/">Home</a></li>
+							<li><a class="scroll-link" href="#">How it works</a></li>
+							<li><a class="scroll-link" href="#">Borrow</a></li>
+							<li><a class="scroll-link" href="#">Fund Someone</a></li>
+							<li><a class="btn btn-link-2" href="/users/logout">Logout</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
 			</div>
-			<div class='col-md-12'>
-                
-				<table id="dashboard" class='col-md-12' >
-                    <h2>Loan Offers</h2>
+    	<div class="container">
+    		<div class="col-md-12">
+                <h2>Welcome {{user['first']}} {{user['last']}}!</h2>
+                <p>Account type: {{session['account_type']}}</p>
+			</div>
+
+				<table id="" class="table table-striped table-bordered" cellspacing="0" width="100%" style="margin-top:25px;">
+                    <h3>Your current loan:</h3>
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -54,16 +86,16 @@
                             <td>{{loan['start']}}</td>
                             <td>{{loan['balance']}}</td>
                             <td>{{loan['status']}}</td>
-                            <td><button><a href="/users/loan/{{loan['id']}}">View Loan</a></button></td>         
+                            <td><form class="" role="form" action="/users/get_loan" method='get'>
+								<input type="submit" value="New Loan">
+								</form>
+							</td>
+                            <!-- <td><button><a href="/users/loan/{{loan['id']}}">View Loan</a></button></td>     -->     
                         </tr>
                     {%endfor%}
                     </tbody>            
                 </table>
 			</div>
-
-    </div>
-			<form class="" role="form" action="/users/get_loan" method='get'>
-				<input type="submit" value="New Loan" class="btn btn-success">
-			</form>
+			
 </body>
 </html>

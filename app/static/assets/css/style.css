@@ -16,6 +16,7 @@ a, a:hover, a:focus {
     -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
 }
 
+
 h1, h2 {
 	margin-top: 10px;
 	font-size: 38px;
@@ -249,12 +250,12 @@ ul.navbar-nav {
 	border: 1px solid #fff;
 }
 
-/*.navbar-brand {
+.navbar-brand {
 	width: 97px;
-	background: url(/download.jpeg) left center no-repeat;
+	background: url('/static/assets/img/backgrounds/images/1.jpg') left center no-repeat;
 	text-indent: -99999px;
-	background-color: black;
-}*/
+	background-color: red;
+}
 
 
 /***** Top content *****/
