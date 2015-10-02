@@ -11,13 +11,13 @@
         <!-- CSS -->
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">        
         <link rel="stylesheet" href="/static/assets/bootstrap/css/bootstrap.min.css">
-      <!--   <link rel="stylesheet" href="/static/assets/typicons/typicons.min.css"> -->
+        <link rel="stylesheet" href="/static/assets/typicons/typicons.min.css">
         <link rel="stylesheet" href="/static/assets/css/animate.css">
         <link rel="stylesheet" href="/static/assets/css/magnific-popup.css">
 		<link rel="stylesheet" href="/static/assets/css/form-elements.css">
         <link rel="stylesheet" href="/static/assets/css/style.css">
         <link rel="stylesheet" href="/static/assets/css/media-queries.css">
-       <!--  <link rel="stylesheet" href="/static/css/styles.css" type="text/css"> -->
+        <link rel="stylesheet" href="/static/css/styles.css" type="text/css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,14 +34,7 @@
         <link rel="apple-touch-icon-precomposed" href="/static/assets/ico/apple-touch-icon-57-precomposed.png">
  -->
     </head>
-
     <body>
-    
-        <!-- Loader -->
-    	<div class="loader">
-    		<div class="loader-img">asdfadsf</div>
-    	</div>
-				
         <!-- Top content -->
         <div class="top-content">
         	
@@ -55,7 +48,7 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<h2 style="color:white">LOAN SHARE</h2>
+						<img src="/static/images/borrow_final.png" alt="" style="height:75px">
 					</div>
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="top-navbar-1">
@@ -67,19 +60,19 @@
 						</ul>
 					</div>
 
-					<div class="modal-body">
+				
 			          <form class="form col-md-12 center-block" action="/users/login" method='post'>
 			            <div class="form-group">
-			              <input type="text" name="log_email" class="form-control input-lg" placeholder="Email">
+			              <input type="text" name="log_email" class="form-control" placeholder="Email">
 			            </div>
 			            <div class="form-group">
-			              <input type="password" name="log_pw" class="form-control input-lg" placeholder="Password">
+			              <input type="password" name="log_pw" class="form-control" placeholder="Password">
 			         
 			            </div>
 			              <span><button type="submit" value="Login" class="btn-group btn-group-sm">Login</button></span><span><button><a href="/">Register</a></button></span>
 			           
 			          </form>
-			      </div>
+			  
 				{%with messages= get_flashed_messages()%}
                     {%if messages%}
                         {%for message in messages%}
