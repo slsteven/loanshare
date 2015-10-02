@@ -1,9 +1,8 @@
 from system.core.controller import *
 import twilio
 import smtplib
-
-
 from twilio.rest import TwilioRestClient
+
 account_sid = "AC5557801c4252c083b249d35b5fbef374"
 auth_token  = "3ee0d202fb03d4d0b341be99c1c19312"
 client = TwilioRestClient(account_sid, auth_token)
@@ -69,14 +68,14 @@ class Loans(Controller):
             phone_txt = "+1" + phone_number
             print phone_txt
 
-            message = client.messages.create(body="Welcome to Loan Share, " + new_user['first_name'] +"!",
+            message = client.messages.create(body="Welcome to BORROW, " + new_user['first_name'] +"!",
                 to= phone_txt,    # Replace with your phone number
                 from_="+12173546021") # Replace with your Twilio number
             print message.sid
 
             TO = new_user['email']
             SUBJECT = 'WELCOME'
-            TEXT ='Welcome to LOAN SHARE, ' + new_user['first_name'] + "!"
+            TEXT ='Welcome to BORROW, ' + new_user['first_name'] + "!"
 
             gmail_sender   = 'loanshare.dojo@gmail.com'
             gmail_passwd = 'Codingdojo1!'
