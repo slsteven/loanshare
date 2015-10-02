@@ -252,7 +252,7 @@ class Loans(Controller):
             currency='usd',
             description='Loan Payment'
         )
-
+        user_info = self.models['Loan'].get_user_info(session['id'])
         return self.load_view('charge.html', amount= amount)
 
 
