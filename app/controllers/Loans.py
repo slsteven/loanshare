@@ -271,7 +271,44 @@ class Loans(Controller):
             currency='usd',
             description='Loan Payment'
         )
+        user_info = self.models['Loan'].get_user_info(session['id'])
+        phone_txt = "+1" + user_info[0]['phone']
+        message = client.messages.create(body="Thanks, " + user_info[0]['first'] +". Your payment has posted",
+                to= phone_txt,    # Replace with your phone number
+                from_="+12173546021") # Replace with your Twilio number
+            # print message.sid
+        print user_info[0]['email']
+        TO = user_info[0]['email']
+        SUBJECT = 'Loan Payment'
+        TEXT = user_info[0]['first'] + ", Your payment has posted."
 
+        gmail_sender   = 'loanshare.dojo@gmail.com'
+        gmail_passwd = 'Codingdojo1!'
+
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.ehlo()
+        server.starttls()
+        server.ehlo
+        server.login(gmail_sender,gmail_passwd)
+
+
+        BODY = '\r\n'.join([
+            "TO: %s" % TO,
+            'FROM: %s' % gmail_sender,
+            'SUBJECT: %s' % SUBJECT,
+            '',
+            TEXT
+            ])
+
+        try:
+            server.sendmail(gmail_sender,[TO], BODY)
+            print 'email sent'
+
+        except:
+            print 'error sending email'
+
+
+        server.quit()            
         return self.load_view('charge.html', amount= amount)
 
 
