@@ -89,7 +89,7 @@ class Loans(Controller):
 
             loan_info = self.models['Loan'].lender_table_info(session['id'])
             session['account_type'] = "Lender"
-        elif user_info[0]['account_type'] == "2":
+        elif user_info[0]['account_type'] == 2:
             loan_info = self.models['Loan'].borrower_table_info(session['id'])
             session['account_type'] = "Borrower"
         print loan_info
@@ -115,7 +115,7 @@ class Loans(Controller):
             print "we are getting in here inside the user_info[0]['account_type']?"
             print "________"
             return self.load_view("show.html",loan=loan_info[0],user=user_info[0], lender = True)
-        elif user_info[0]['account_type'] == "2":
+        elif user_info[0]['account_type'] == 2:
             #user is a borrower
             lender_query = self.models['Loan'].borrower_table_info(session['id'])
             lender_info = self.models['Loan'].get_user_info(lender_query[0]['lender_id'])
