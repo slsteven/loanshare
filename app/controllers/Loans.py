@@ -27,7 +27,6 @@ class Loans(Controller):
         phone_number.pop(6)
         phone_number = ''.join(phone_number)
 
-
         new_user={
             "first_name":request.form['reg_first'],
             "last_name":request.form['reg_last'],
@@ -51,7 +50,7 @@ class Loans(Controller):
                 to= phone_txt,    # Replace with your phone number
                 from_="+12173546021") # Replace with your Twilio number
             print message.sid
-            
+
         else:
             for message in validate['errors']:
                 flash(message)
@@ -82,20 +81,32 @@ class Loans(Controller):
             return redirect('/')
         user_info = self.models['Loan'].get_user_info(session['id'])
 
+<<<<<<< HEAD
 
+=======
+        print "______"
+        print user_info[0]['account_type']
+        print "_____"
+>>>>>>> 5d7667a68380f295dd964392779d005476b0c95c
         #check if user is a lender or borrower and renders information accordingly
-        if user_info[0]['account_type'] == "1":
+        if user_info[0]['account_type'] == 1:
+
             loan_info = self.models['Loan'].lender_table_info(session['id'])
             session['account_type'] = "Lender"
         elif user_info[0]['account_type'] == "2":
             loan_info = self.models['Loan'].borrower_table_info(session['id'])
             session['account_type'] = "Borrower"
 
+
         active_loan = self.models['Loan'].ledger(loan_info)
         print active_loan
         if active_loan['status']:
             return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],ledger=active_loan['ledger'])
+
+        print loan_info
+
         return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0])
+
 
     def logout(self):
         session.clear()
@@ -105,11 +116,17 @@ class Loans(Controller):
     def show_loan(self,loan_id):
         loan_info = self.models['Loan'].get_loan_info(loan_id)
         user_info = self.models['Loan'].get_user_info(session['id'])
+        print "________"
+        print "we are getting in here?"
+        print "________"
 
         # return self.load_view("show.html")
-        if user_info[0]['account_type'] == "1":
+        if user_info[0]['account_type'] == 1:
             #user is a lender
-            return self.load_view("show.html",loan=loan_info[0],user=user_info[0])
+            print "________"
+            print "we are getting in here inside the user_info[0]['account_type']?"
+            print "________"
+            return self.load_view("show.html",loan=loan_info[0],user=user_info[0], lender = True)
         elif user_info[0]['account_type'] == "2":
             #user is a borrower
             lender_query = self.models['Loan'].borrower_table_info(session['id'])
@@ -119,6 +136,15 @@ class Loans(Controller):
 
 
 
+    def accepted_loan(self,id):
+        self.models['Loan'].accept_loan(id)
+        return redirect ("/users/dashboard")
+
+    def counter_offer(self,oldinfo):
+        old_loan_info = self.models['Loan'].get_loan_info(oldinfo)
+        borrower_email = self.models['Loan'].get_borrower_email(oldinfo)
+        #self.models['Loan'].counter(old_loan_info)
+        return self.load_view("counter.html", oldinfo = old_loan_info, oldemail = borrower_email)
 
     def new_loan(self):
         return self.load_view('loan_new.html')
@@ -138,7 +164,4 @@ class Loans(Controller):
         self.models['Loan'].new_loan(passed_info)
         print "WE GOT PAST NEW LOAN METHOD"
         return redirect('/users/dashboard')
-
-
-
 

@@ -15,7 +15,7 @@
 		});
     </script>
     <style type='text/css'>
-	
+
     </style>
 </head>
 <body>
@@ -36,9 +36,17 @@
                 <p>Loan Term: {{loan['term']}}</p>
                 {%if lender%}
                 <p>Lender Name: {{lender['first']}} {{lender['last']}}</p>
+
                 {%endif%}
-                <form action="">
+                
                     
+
+                <form action="/accept/{{loan['id']}}" method='POST'>
+					<input type="submit" value ="accept loan">
+                </form>
+				<form action="/counteroffer/{{loan['id']}}" method='GET'>
+					<input type="submit" value ="counter_offer">
+
                 </form>
                 <div id='ledger'>
                     <table>
