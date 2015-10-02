@@ -56,29 +56,35 @@ class Loan(Model):
             return {'status': False}
 
 ### this is the new loan method it checks to see if the user is in the databases
-    def new_loan(self,passed_info):
-        user_query = "SELECT * FROM users WHERE email = '{}' LIMIT 1".format(passed_info['to_email'])
+    def new_loan(self,user_id,loan):
+        user_query = "SELECT * FROM users WHERE email = '{}'".format(loan['to_email'])
         validate = self.db.query_db(user_query)
+
+        self_info =self.db.query_db("SELECT * FROM users WHERE id = '{}'".format(user_id))
+
         if validate == []:
             # right now theres no way to hold the loan id info so just tell the user that the other user must have a registered account
             # in order to successfuly petition the loan
             print "there is no user by that email"
+            return {'status':False,'message':"Cannot find user"}
         else:
-            print "IF WE GOT HERE THEN WE FOUND THE EMAIL OF THE PERSON WE WANT TO SEND THE LOAN OFFER TO"
-            # inserting into loans table all of the user passed information
-            self.db.query_db("INSERT INTO `loans` (`title`, `amount`,`interest`,`term`,`start`,created_at,updated_at) VALUES ('{}', '{}','{}','{}','{}',NOW(),NOW())".format(passed_info['title'],passed_info['amount'],passed_info['interest'],passed_info['end'],passed_info['start']))
-            # creating a var that gathers all the info of the potential lender by querying the db for the user inserted email
-            info_of_lender = self.db.query_db("SELECT users.id, users.first, users.last FROM users WHERE email = '{}'".format(validate[0]['email']))
-            #By gathering the title of the newly inserted loan we can grab the loan id and any other piece of info thats nessecery
-            info_of_loan = self.db.query_db("SELECT * FROM loans WHERE title = '{}' ".format(passed_info['title']))
-            # by takinf all of the newly gathered info from the above two select statments we can then correctly update the users_loans table
-            # take special note that passed_info[0]['id'] is the session['id'] variable
-            self.db.query_db("INSERT INTO user_loans (loan_ID , borrower_ID , lender_ID) VALUES('{}','{}','{}')".format(info_of_loan[0]['id'],passed_info['user_id'],info_of_lender[0]['id']))
+            new_loan_query = "INSERT INTO `hackathon`.`loans` (`title`, `amount`, `interest`, `term`, `start`, `status`,`created_at`,`updated_at`) VALUES ('{}','{}','{}','{}','{}','{}', NOW(),NOW())".format(loan['title'],loan['amount'],loan['interest'],loan['term'],loan['start'],"1")
+            self.db.query_db(new_loan_query)
+
+            if self_info[0]['account_type'] == "1":
+                print"in if"
+                ##session will be lender
+                lender_query = "INSERT INTO `hackathon`.`user_loans` (`lender_id`,`borrower_id`) VALUES ('{}', '{}')".format(user_id,validate[0]['id'])
+                self.db.query_db(lender_query)
+
+            elif self_info[0]['account_type'] == "2":
+                print "in elif"
+                borrower_query = "INSERT INTO `hackathon`.`user_loans` (`borrower_id`,`lender_id`) VALUES ('{}', '{}')".format(user_id,validate[0]['id'])
+                self.db.query_db(borrower_query)
+
             print "IF WE GOT HERE THEN WE INSERT AND SELECTED ALL MYSQL QUERIES SUCCESFULLY"
-        return
-    def accept_loan(self, loan_id):
-        query ="UPDATE `hackathon`.`loans` SET `status`='1' WHERE `id`='{}';".format(loan_id)
-        return self.db.query_db(query)
+            return {'status':True}
+
 
     def get_loan_info(self,id):
         return self.db.query_db("SELECT * FROM loans WHERE loans.id = {}".format(id))
@@ -90,20 +96,13 @@ class Loan(Model):
     def counter(self,old_loan):
         pass
     def get_borrower_email(self,id):
-        query="SELECT users2.first AS borrower, users.first AS lender, users2.email AS borrowers_email FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE user_loans.loan_ID = '{}';".format(id)
+        query="SELECT users2.first AS borrower, users.first AS lender, users.email AS lenders_email,users2.email AS borrowers_email FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE user_loans.loan_ID = '{}';".format(id)
         return self.db.query_db(query)
     #Retrieves loans for borrowers
 
     def get_loans(self,id):
         user_query = self.db.query_db("SELECT users.id AS borrow_id, users2.id AS lender_id, users.first AS borrower,  users2.first AS lender, users.email AS borrow_email, users2.email AS lender_email FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE users.id = {}".format(id))
-        print user_query
 
-        # loan_query = self.db.query_db("SELECT * FROM loans WHERE user_loans.lender_id = {} AND user_loans.borrower_id = {}".format(user_query[0]['lender'],user_query[0]['borrower']))
-
-        # print loan_query
-
-        #info being returned:
-        #[{'lender_email': None, 'borrow_email': 'chungkyd@gmail.com', 'lender': None, 'borrow_id': 1, 'borrower': 'Darrick', 'lender_id': None}]
         return user_query
 
 
@@ -115,11 +114,12 @@ class Loan(Model):
 
     def lender_table_info(self,id):
         # Grabs table information
-        return self.db.query_db("SELECT loans.id,loans.title,loans.amount,loans.intrest,loans.term,loans.start,loans.status,loans.created_at,ledgers.balance, user_loans.borrower_id, user_loans.lender_id  FROM hackathon.loans LEFT JOIN user_loans ON loans.id = user_loans.loan_id LEFT JOIN ledgers on loans.id = ledgers.loan_id WHERE user_loans.lender_id = {}".format(id))
+        return self.db.query_db("SELECT loans.id,loans.title,loans.amount,loans.interest,loans.term,loans.start,loans.status,loans.created_at,ledgers.balance, user_loans.borrower_id, user_loans.lender_id  FROM hackathon.loans LEFT JOIN user_loans ON loans.id = user_loans.loan_id LEFT JOIN ledgers on loans.id = ledgers.loan_id WHERE user_loans.lender_id = {}".format(id))
 
     def borrower_table_info(self,id):
         # Grabs table information
-        return self.db.query_db("SELECT loans.id,loans.title,loans.amount,loans.interest,loans.term,loans.start,loans.status,loans.created_at,ledgers.balance, user_loans.borrower_id,user_loans.lender_id FROM hackathon.loans LEFT JOIN user_loans ON loans.id = user_loans.loan_id LEFT JOIN ledgers on loans.id = ledgers.loan_id WHERE user_loans.borrower_id = {}".format(id))
+        query = "SELECT loans.id,loans.title,loans.amount,loans.interest,loans.term,loans.start,loans.status,loans.created_at,ledgers.balance, user_loans.borrower_id,user_loans.lender_id FROM hackathon.loans LEFT JOIN user_loans ON loans.id = user_loans.loan_id LEFT JOIN ledgers on loans.id = ledgers.loan_id WHERE user_loans.borrower_id = {}".format(id)
+        return self.db.query_db(query)
 
 
     def get_loan_info(self,id):
@@ -137,6 +137,31 @@ class Loan(Model):
             return {'status': False}
 
 
+    def loan_check(self,id,acct_type):
+        if acct_type == "Lender":
+            query = "SELECT loans.id AS loan_id from users left join user_loans on users.id = user_loans.lender_id left join loans on user_loans.loan_id = loans.id where user_loans.lender_id = {}".format(id)
+            check = self.db.query_db(query)
+            if check == []:
+                return False
+            else: 
+                return True
+        elif acct_type == "Borrower":
+            query = "SELECT loans.id AS loan_id from users left join user_loans on users.id = user_loans.lender_id left join loans on user_loans.loan_id = loans.id where user_loans.borrower_id = {}".format(id)
+            check = self.db.query_db(query)
+            if check == []:
+                return False
+            else: 
+                return True
+
+
+    def accept_loan(self,loan_id):
+        return self.db.query_db("UPDATE `hackathon`.`loans` SET `status`='3' WHERE `id`='{}'".format(loan_id))
+
+    def adjust_loan(self,loan_id):
+        ##SET status to 2 indicating loan adjustment
+        return self.db.query_db("UPDATE `hackathon`.`loans` SET `status`='2' WHERE `id`='{}'".format(loan_id))
+
+       
 
 
 
