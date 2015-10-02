@@ -96,7 +96,7 @@ class Loan(Model):
     def counter(self,old_loan):
         pass
     def get_borrower_email(self,id):
-        query="SELECT users2.first AS borrower, users.first AS lender, users.email AS lenders_email,users2.email AS borrowers_email FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE user_loans.loan_ID = '{}';".format(id)
+        query="SELECT users2.id AS borrower_id,users2.first AS borrower, users.id AS lender_id,users.first AS lender, users.email AS lenders_email,users2.email AS borrowers_email FROM users LEFT JOIN user_loans ON users.id = user_loans.lender_id LEFT JOIN users AS users2 ON users2.id = user_loans.borrower_id WHERE user_loans.loan_ID = '{}';".format(id)
         return self.db.query_db(query)
     #Retrieves loans for borrowers
 
@@ -155,11 +155,22 @@ class Loan(Model):
     def accept_loan(self,loan_id):
         return self.db.query_db("UPDATE `hackathon`.`loans` SET `status`='3' WHERE `id`='{}'".format(loan_id))
 
+
     def adjust_loan(self,loan_id):
         ##SET status to 2 indicating loan adjustment
         return self.db.query_db("UPDATE `hackathon`.`loans` SET `status`='2' WHERE `id`='{}'".format(loan_id))
 
-       
+    def update_loan(self,loan_id,new_info):
+
+        update_query = "UPDATE `hackathon`.`loans` SET `title`='{}', `amount`='{}', `interest`='{}',`term`='{}',`start`='{}',`status`='2',`updated_at`= NOW() WHERE `id`='{}'".format(new_info['title'],new_info['amount'],new_info['interest'],new_info['term'],new_info['start'],loan_id)
+
+        return self.db.query_db(update_query)
+
+    def insert_to_ledger(self,loan_info,user_type):
+        ledger_query = "INSERT INTO `hackathon`.`ledgers` (`loan_id`, `lender_id`, `borrower_id`, `balance`,`created_at`,`updated_at`) VALUES ('{}', '{}', '{}', '{}',NOW(),NOW())".format(loan_info['id'],user_type['lender_id'],user_type['borrower_id'],loan_info['amount'])
+        return self.db.query_db(ledger_query)
+
+
 
 
 

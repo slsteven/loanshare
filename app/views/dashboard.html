@@ -39,6 +39,7 @@
                             <th>Loan Term</th>
                             <th>Start Date</th>
                             <th>Balance</th>
+                            <th>Lender Name</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -50,14 +51,19 @@
                             <td><a href="/users/loan/{{loan['id']}}">{{loan['title']}}</a></td>
                             <td>${{loan['amount']}}</td>
                             <td>{{loan['interest']}}%</td>
-                            <td>{{loan['term']}}</td>
+                            <td>{{loan['term']}} Months</td>
                             <td>{{loan['start']}}</td>
                             <td>{{loan['balance']}}</td>
+                            <td>{{lender_name}}</td>
                             <td>{{loan['status']}}</td>
                             {%if loan['status'] == '3'%}
-                            <td>
-                                <button><a href="">Make a Payment</a></button>
-                            </td>
+                                {%if user['status'] == 'Borrower'%}
+                                    <td>
+                                        <button><a href="">Make a Payment</a></button>
+                                    </td>
+                                {%else%}
+                                    <td></td>
+                                {%endif%} 
                             {%else%}
                             <td>
                                 <button><a href="/users/{{loan['id']}}/adjust">Adjust</a></button>

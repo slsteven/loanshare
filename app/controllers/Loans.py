@@ -123,22 +123,23 @@ class Loans(Controller):
      
             session['account_type'] = "Lender"
 
-
         elif user_info[0]['account_type'] == "2":
             loan_info = self.models['Loan'].borrower_table_info(session['id'])
 
             session['account_type'] = "Borrower"
 
-
+        lender_borrower_info = self.models['Loan'].get_borrower_email(loan_info[0]['id'])
+        lender_name = lender_borrower_info[0]['lender']
+        print lender_borrower_info
         #Checks if user already has loans
         check = self.models['Loan'].loan_check(session['id'],session['account_type'])
         
         if check:
             active_loan = self.models['Loan'].ledger(loan_info)
             if active_loan['status']:
-                return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],ledger=active_loan['ledger'])
+                return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],ledger=active_loan['ledger'],lender_name=lender_name)
             else:
-                return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0])
+                return self.load_view("dashboard.html",loan_info = loan_info,user=user_info[0],lender_name=lender_name)
         else:
             return self.load_view("dashboard.html",user=user_info[0])
 
@@ -168,6 +169,8 @@ class Loans(Controller):
 
     def accepted_loan(self,id):
         self.models['Loan'].accept_loan(id)
+        loan_info = self.models['Loan'].get_loan_info(loan_id)
+        self.models['Loan'].insert_to_ledger(loan_info[0])
         return redirect ("/users/dashboard")
 
 
@@ -198,27 +201,32 @@ class Loans(Controller):
 
     def accept_loan(self,loan_id):
         self.models['Loan'].accept_loan(loan_id)
+        loan_info = self.models['Loan'].get_loan_info(loan_id)
+        user_type = self.models['Loan'].get_borrower_email(loan_id)
+
+        self.models['Loan'].insert_to_ledger(loan_info[0],user_type[0])
+
         flash("Congratualations! You've accepted your loan")
         return redirect('/users/dashboard')
 
     def adjust_loan(self,loan_id):
+        info = self.models['Loan'].get_loan_info(loan_id)
         self.models['Loan'].adjust_loan(loan_id)
-        loan_info = self.models['Loan'].get_loan_info(loan_id)
-        email_to_grab = self.models['Loan'].get_borrower_email(loan_id)
-        print loan_info
-        if session['account_type'] == "Lender":
-            email_for_form = email_to_grab[0]['borrowers_email']
-        elif session['account_type'] == "Borrower":
-            print "in elif"
-            email_for_form = email_to_grab[0]['lenders_email']
+        # email_to_grab = self.models['Loan'].get_borrower_email(loan_id)
+    
+        return self.load_view("counter.html",info=info[0],loan_id=loan_id)
 
-        return self.load_view("counter.html", info = loan_info[0], email = email_for_form)
-
-    # def counter_offer(self,oldinfo):
-    #     old_loan_info = self.models['Loan'].get_loan_info(oldinfo)
-    #     borrower_email = self.models['Loan'].get_borrower_email(oldinfo)
-    #     #self.models['Loan'].counter(old_loan_info)
-    #     return self.load_view("counter.html", oldinfo = old_loan_info, oldemail = borrower_email)
+    def update_loan(self,loan_id):
+        passed_info = {
+        'title' : request.form['name_loan'],
+        'amount':request.form['amount_loan'],
+        'interest': request.form['interest_loan'],
+        'term': request.form['term'],
+        'start': request.form['start'],
+        'user_id': session['id']
+        }
+        self.models['Loan'].update_loan(loan_id,passed_info)
+        return redirect("/users/dashboard")
 
 
 
