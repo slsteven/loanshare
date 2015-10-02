@@ -14,42 +14,7 @@
 </head>
 <body>
     <h1>Loan</h1>
-    {%if info%}
-      <form action="/users/loan_form" method="post">
-        <label for="name_loan">Name of Loan: </label>
-        <input type="text" name='name_loan' id='name_loan' class="form-control" value="{{info['title']}}"placeholder="">
-        <label for="amount_loan">Amount Loaned: </label>
-        <input type="text" name='amount_loan' id='amount_loan' class="form-control" placeholder="">
-        <label for="interest_loan">Interest: </label>
-        <input type="text" name='interest_loan' id='interest_loan' class="form-control" placeholder="">
-        <!-- <label for="start_date">Starts: </label>
-        <p>Date of first payment: <input type="date" name="start" class="datepicker"></p>
-        <label for="end_date">Ends: </label> -->
-        <label for="term">Term: (In Months) </label>
-        <select name="term" id="term">
-          <option value="3">3 Months</option>
-          <option value="6">6 Months</option>
-          <option value="12">12 Months</option>
-          <option value="18">18 Months</option>
-          <option value="24">24 Months</option>
-          <option value="30">30 Months</option>
-          <option value="36">36 Months</option>
-        </select>
-      
-        <p>Start: <input type="date" name="start" class="datepicker"></p>
-        <label for="person_to_email">Email loan to: </label>
-        <input type="text" name='person_to_email' id='email_person' class="form-control" placeholder="">
-        <input type="submit" value="Send Loan to be processed" class="btn btn-success">
-      </form>
-      {%with messages=get_flashed_messages()%}
-        {%if messages%}
-          {%for message in messages%}
-            <p>{{message}}</p>
-          {%endfor%}
-        {%endif%}
-      {%endwith%}
 
-    {%else%}
       <form action="/users/loan_form" method="post">
         <label for="name_loan">Name of Loan: </label>
         <input type="text" name='name_loan' id='name_loan' class="form-control" placeholder="">
@@ -83,6 +48,6 @@
           {%endfor%}
         {%endif%}
       {%endwith%}
-    {%endif%}
+
 </body>
 </html>
